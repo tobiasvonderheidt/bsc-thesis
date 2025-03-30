@@ -77,11 +77,11 @@ Steganography can help avoid accidental data leaks, as detailed in \cref{sec:the
 
 While it would defeat the purpose of steganography, it is necessary that watermarks are detectable~\cite{evsutinDigitalSteganographyWatermarking2020,soltanipanahPropertiesNonMediaDigital2016}. Otherwise, e.g. copyright enforcement would not be possible. As watermarks are applied in a wide range of domains, hiding information does not necessarily mean that it has to be invisible \textit{to humans}~\cite{soltanipanahPropertiesNonMediaDigital2016}. Watermarked data often is not intended to be consumed by humans in the first place, but by machines instead~\cite{soltanipanahPropertiesNonMediaDigital2016}. Therefore, detectability of watermarks could often simply be achieved by allowing them to be visible to humans. A notable example is the watermarking on our banknotes, proving their origin and legitimacy. However, these criteria still hold true for watermarks that are not visible to humans~\cite{evsutinDigitalSteganographyWatermarking2020,soltanipanahPropertiesNonMediaDigital2016}.
 
-\section{\glspl{LLM}}
+\section{Large language models}
 \label{sec:LLMs}
 This section will first give a brief overview of the history of \glspl{LLM}\footnote{Note that there is no clear definition when a language model is considered \textit{large}. For our purposes, any modern language model is called \gls{LLM}.}, thereby showing how they gained the popularity they have today. Then, we will discuss the issues that come with their commercial usage as chatbots. From this, we will deduct some of the requirements for our implementation of text-based steganography. This will enable us to leverage \glspl{LLM} for our goal of protecting user privacy.
 
-\subsection{A short history of \glspl{LLM}}
+\subsection{A short history of large language models}
 \label{sec:aShortHistoryOfLLMs}
 While \glspl{LLM} have made rapid progress and gained public attention only in the recent years, their history goes back many decades~\cite{berryLimitsComputationJoseph2023}. As early as the 1960s, Joseph Weizenbaum was able to create what is likely the first program that allowed humans to interact with computers via natural language: ELIZA~\cite{weizenbaumELIZAComputerProgram1966}. \cref{fig:eliza} shows an example output~\cite{wangELIZAChatGPTBrief2024}.
 
