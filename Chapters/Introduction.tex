@@ -4,3 +4,34 @@
 \chapter{Introduction}\label{ch:introduction}
 %************************************************
 \glsresetall % Resets all acronyms to not used
+
+In today's digital age, sensitive information is constantly exchanged over the internet. Protecting our privacy and security is more important than ever. Although the platforms we use to communicate change frequently, one constant persists: Our communication is heavily text-based. This encompasses instant messaging, email, \gls{SMS}, social media, forums, blogs, and more.
+
+In this thesis, we focus on what is likely the most sensitive use case: Instant messaging. People share deeply personal information in chat messages, such as their political beliefs, sexual orientation, religious views, or financial situation. As a result, mobile devices are frequent targets of attacks. Once an attacker gets hold of our communication, they can use it against us in various ways. This ranges from stalking in abusive relationships to evidence in legal proceedings.
+
+One might think that modern instant messengers are equipped with sufficient security measures to protect our data, given the widespread use of technologies like \gls{E2EE} and \gls{2FA}. But most of these mechanisms primarily address remote attackers, overlooking the threat of a physically present attacker. This could be the partner in a relationship or a law enforcement officer. Currently, protection against this type of attacker is limited. Typical examples include local authentication methods, such as unlocking the messenger app with a fingerprint, or self-destructing messages that delete after a set timer. But these approaches come with significant drawbacks. The former can be bypassed easily by the attacker physically forcing the victim to unlock the app. The latter often does not provide the desired user experience for everyday life.
+
+A promising solution is presented by steganography. This technique involves concealing information within an inconspicuous cover signal. Possible cover signals include digital images, audio, video, or - most notably in this context - natural language text. Natural language in particular is suitable as a cover signal because it is independent from any one communication medium~\cite{zieglerNeuralLinguisticSteganography2019}. This can be leveraged to embed a sensitive \textit{secret message} into a generic \textit{cover text} to be sent as chat message~\cite{zieglerNeuralLinguisticSteganography2019}. As a result, even a physically present attacker could be misled, protecting the victim from potential harm. This approach introduces a layer of security currently missing in popular instant messengers.
+
+By implementing the core functionality of a chat app with built-in steganography on Android, we set the precedent for further research and development. Our app is called \gls{HiPS}\footnote{Source code is available at \url{https://github.com/tobiasvonderheidt/hips} (public) and mirrored at \url{https://dev.seemoo.tu-darmstadt.de/stud-theses/bsc-tobias-vonderheidt} (private).}. It runs a \gls{LLM} locally on the smartphone to generate the cover text for a given secret message and vice versa. As the scope of this thesis doesn't involve a server backend, users of our app can try the steganography in a demo conversation view. Furthermore, we offer a standalone functionality to use steganography with existing instant messengers by copy-pasting messages. This enables real-world users to protect themselves already today.
+
+We implement steganography with two algorithms demonstrated in a project called Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019}. Its modular architecture allows for future adaptations to which algorithms are used in each of the following steps:
+
+\begin{enumerate}
+    \item Convert the secret message from string to binary, compressing it in the process.
+    \item Encrypt the secret message bits.
+    \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the encrypted bits.
+\end{enumerate}
+
+The popular llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024} is used to run \glspl{LLM} locally. This choice allows us to access a broad range of \glspl{LLM} readily available in the \lstinline|.gguf| file format on platforms like HuggingFace~\cite{huggingfaceModelsHuggingFace2025}. Adapting our implementation to different devices becomes as easy as swapping out the \gls{LLM}: We are able to deploy a small\footnote{Note that there is no clear definition when a language model is considered \textit{large}. For our purposes, any modern language model is called \gls{LLM}.} \gls{LLM} on an entry-level smartphone the same way we deploy a large \gls{LLM} on a flagship.
+
+Overall, our app creates value and ensures its longevity by fulfilling the following requirements:
+
+\begin{enumerate}
+    \item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
+    \item Run the \gls{LLM} locally on an Android smartphone, i.e. don't require any internet connection for the steganography itself.
+    \item Achieve acceptable performance on entry-level devices.
+    \item Make the \gls{LLM} swappable.
+\end{enumerate}
+
+Lastly, we conducted a survey amongst students of TU Darmstadt to evaluate the plausibility of our cover texts in comparison to real chat conversations. This resulted in profound insights into the linguistics of chat messages and serves as a starting point for further optimizations of cover text quality. By creating a well-documented, easy-to-maintain implementation of text-based steganography on Android, we open up many opportunities for further research to be conducted at SEEMOO.
