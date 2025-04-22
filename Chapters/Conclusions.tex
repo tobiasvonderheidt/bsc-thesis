@@ -4,3 +4,9 @@
 \chapter{Conclusions}\label{ch:conclusions}
 %************************************************
 \glsresetall % Resets all acronyms to not used
+
+By implementing \gls{HiPS}, we realized steganography in chat conversations using local \glspl{LLM} on Android. We achieved acceptable performance even on entry-level smartphones. While our app can be developed further to become a new instant messenger, it also offers standalone functionality to work with existing messaging apps today. This enables users to add another layer of security to their digital communication and thereby protects their privacy.
+
+To achieve this, we ported the algorithms implemented in Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} to llama.cpp~\cite{gerganovGgerganovLlamacpp2024}. This enables us to swap \glspl{LLM} to scale with available hardware. Its simple abstractions along with our detailed documentation make \gls{HiPS} easy to maintain. We extend Stegasuras by formatting the context with a chat template to create conversations between cover texts. Consequently, users are now able influence cover text quality via a system prompt and plain text messages. Furthermore, we enable users to enrich cover texts with emojis. Ultimately, we were able to fulfill all requirements we set ourselves in \cref{ch:introduction}.
+
+Lastly, we conducted a survey amongst students of TU Darmstadt to compare linguistic characteristics of our cover texts to real chat messages. This delivered valuable insights in how to fine-tune cover text quality for a highly relevant demographic of potential users.
