@@ -5,6 +5,10 @@
 %************************************************
 \glsresetall % Resets all acronyms to not used
 
+In this chapter, we want to discuss the details of our implementation of text-based steganography on Android. First we will give a high-level overview of the app in \cref{sec:overviewOfTheApp}. Then \cref{sec:jni} will show an example of how Java/Kotlin and C++ code can interact using the \gls{JNI}. \cref{sec:tokenGenerationWithLlamaCpp} will introduce all necessary abstractions to understand token generation with llama.cpp. \cref{sec:algorithms} will explain the algorithms we used for steganography. So far, this is what was needed to port the functionality of Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} to Android.
+
+We expand this functionality already in \cref{sec:algorithms} by implementing another compression algorithm. Then we will show how to improve cover text quality in \cref{sec:finishingTheLastSentence,sec:creatingAConversationBetweenCoverTexts,sec:emojis}: First we will show how to handle the last sentence, then how to create a conversation, and lastly how to generate emojis.
+
 \section{Overview of the app}
 \label{sec:overviewOfTheApp}
 
