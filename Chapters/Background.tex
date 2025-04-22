@@ -115,7 +115,7 @@ Commercial chatbots expose many ethical and privacy concerns~\cite{rayBenchmarki
 
 We can't solve all of these issues, but we can leverage \glspl{LLM} to combat some of them. We can deduct some requirements for our implementation of text-based steganography from the issues described above:
 \begin{itemize}
-    \item Our implementation should run the \gls{LLM} locally. This is to ensure data sovereignity by avoiding any chance of leaks from exposing data to a third party.
+    \item Our implementation should run the \gls{LLM} locally. This is to ensure data sovereignty by avoiding any chance of leaks from exposing data to a third party.
     \item Our implementation should provide an acceptable performance on today's entry-level smartphones. This is important since running \glspl{LLM} is resource-intensive and we want to target a very diverse user spectrum.
     \item Our implementation should work offline. This means, once the \gls{LLM} is downloaded, no internet connection should be required. This is within the scope of this thesis, as no server backend for sending messages will be implemented.
     \item Preferably, the \gls{LLM} (and any dependencies) should be open source. This may be achieved by making the \gls{LLM} swappable.
