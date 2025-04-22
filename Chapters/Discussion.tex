@@ -4,3 +4,23 @@
 \chapter{Discussion}\label{ch:discussion} % $\mathbb{ZNR}$
 %************************************************
 \glsresetall % Resets all acronyms to not used
+
+While \gls{HiPS} makes significant contributions to realizing steganography with local \glspl{LLM} on smartphones, it is not without limitations. But these limitations only open up further opportunities for research to be conducted at SEEMOO. We discuss the most relevant ones in the following sections.
+
+\section{Contributions}
+\label{sec:contributions}
+By implementing \gls{HiPS}, we have shown that leveraging local \glspl{LLM} for steganography is possible under the heavy hardware restrictions imposed by entry-level smartphones. We provide a working implementation of steganography in chat messages and are able to demonstrate multiple use cases: Our app can be developed further to become a new player in the instant messaging market (see \cref{sec:limitationsAndFutureResearch}). But it also offers a standalone functionality to help people protect their privacy today. This only requires copy-pasting chat messages back and forth between existing messaging apps and \gls{HiPS}. As we achieved acceptable performance, we can already appeal to the audience in need of this additional layer of security.
+
+We improved the implementation provided by Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} by porting it from PyTorch to llama.cpp~\cite{gerganovGgerganovLlamacpp2024}. This modern framework gives us access to a wide range of \glspl{LLM}, enabling us to swap them out easily. Its abstractions improve readability of our code over their original implementation significantly. This is amplified by our extensive refactoring and documentation. Future students at SEEMOO can pick up development of our app with very little prior knowledge.
+
+We extended the functionality of Stegasuras by not only using a context to generate the cover text from, but by adding multiple mechanisms to influence the \gls{LLM} behaviour further. We format the context with a chat template, which allows us to expose a system prompt in the \gls{UI}. This gives the user a lower-level way to access the \gls{LLM}. For non-sensitive conversation, users are able to send plain text messages in-between cover texts. As those will be used as context for subsequent cover texts, this allows the user to manually steer the topic of the conversation at any time. We solved problems concerning the generation of emojis, which enables users to enrich their cover texts and convey non-verbal communication.
+
+Lastly, we conducted a survey to compare linguistic characteristics of our cover texts with real chat messages. This resulted in valuable insights in how to fine-tune our recommended settings to appeal to a relevant demographic of users. In particular, this serves as a starting point for further engineering of the system prompt.
+
+\section{Limitations and future research}
+\label{sec:limitationsAndFutureResearch}
+Further research to be conducted at SEEMOO may focus on various extensions of our implementation, eliminating its limitations due to the scope of this thesis. For example, a server backend could be implemented and hosted at TU Darmstadt. This would enable users to actually send messages instead of only storing them locally for a demo conversation view. Steganography could be implemented for other modes of communication (e.g. embedding secret messages in photos, videos or audio files) to replicate more functionality of popular messaging apps. Alternatively, the functionality we implemented could be extracted into a library to add to existing instant messengers. All these approaches may lower the barriers for adoption significantly.
+
+As hardware is the strongest limiting factor, various optimizations for specific use cases could be explored. This includes the choice of \gls{LLM}~\cite{eldanTinyStoriesHowSmall2023}, modifying the \gls{LLM}~\cite{carreiraRevolutionizingMobileInteraction2023} or llama.cpp itself~\cite{chenOptimizationArmv9Architecture2024}, or distributing load amongst multiple smartphones~\cite{zhaoLinguaLinkedDistributedLarge2023}. The last suggestion in particular already has experimental support in llama.cpp via \glspl{RPC}~\cite{gerganovGgerganovLlamacpp2024}. Fine-tuning the \gls{LLM} on one's own chat messages~\cite{donnerSimulationMeFinetuning2024} may be attractive as well (see \cref{ch:evaluation}).
+
+Further maintenance of our app may focus on resolving open issues. This includes handling some edge cases (see \cref{ch:evaluation}), improving performance (see \cref{ch:evaluation}) and fine-tuning cover text quality based on the feedback we gathered (see \cref{ch:evaluation}).
