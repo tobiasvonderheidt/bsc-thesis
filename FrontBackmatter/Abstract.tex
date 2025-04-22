@@ -9,11 +9,21 @@
 \let\cleardoublepage\relax
 
 \chapterExtra{Abstract}
+While you read this sentence, around a million WhatsApp messages are being sent. We share the details of our personal lives in them, from our highest hopes to our deepest fears. This is only possible because we assume them to remain private.
+
+To protect user privacy, we implement an Android app called \gls{HiPS}. It creates a layer of protection currently missing from popular instant messengers: Steganography. We run \glspl{LLM} locally on smartphones to encode secret messages into inconspicuous cover texts. Our work is based on the Stegasuras project. By porting it to llama.cpp, we are able to swap \glspl{LLM} to scale with available hardware. We create chat conversations between cover texts, fine-tune their quality via a system prompt and plain text messages, and enrich them with emojis.
+
+Lastly, we conducted a survey amongst students to compare our cover texts to real chat conversations. This delivered valuable insights in how to fine-tune cover text quality for this highly relevant demographic of users.
 
 \vfill
 
 \begin{otherlanguage}{ngerman}
 \chapterExtra{Zusammenfassung}
+Während Sie diesen Satz lesen, werden etwa eine Million WhatsApp-Nachrichten verschickt. Wir teilen darin die Details unseres Privatlebens, von unseren größten Hoffnungen bis hin zu unseren tiefsten Ängsten. Das ist nur möglich weil wir glauben, dass sie auch privat bleiben.
+
+Um die Privatsphäre von Nutzern zu schützen, implementieren wir eine Android-App namens \gls{HiPS}. Sie schafft eine Schutzschicht, die in populären Instant Messengern derzeit fehlt: Steganografie. Wir führen \glspl{LLM} lokal auf Smartphones aus, um geheime Botschaften in unauffällige Cover-Texte zu kodieren. Unsere Arbeit basiert auf dem Stegasuras-Projekt. Durch die Portierung zu llama.cpp sind wir in der Lage, \glspl{LLM} auszutauschen um mit der verfügbaren Hardware zu skalieren. Wir erzeugen Chat-Konversationen zwischen Cover-Texten, steuern ihre Qualität über einen System Prompt und Klartext-Nachrichten, und verfeinern sie mit Emojis.
+
+Schließlich führten wir eine Umfrage unter Studenten durch, um unsere Cover-Texte mit echten Chat-Konversationen zu vergleichen. Dies lieferte wertvolle Einblicke darin, wie wir die Qualität von Cover-Texten auf diese besonders relevante Nutzergruppe zuschneiden können.
 \end{otherlanguage}
 
 \endgroup
