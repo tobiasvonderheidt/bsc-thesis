@@ -127,6 +127,63 @@ Lastly, there is a button to reset all settings to their default values. It come
 
 \section{Java Native Interface}
 \label{sec:jni}
+As discussed in \cref{sec:llamaCpp}, we chose llama.cpp as the framework to run our \glspl{LLM} with. Since this is a C++ library, we will need to integrate C++ code into our Kotlin-based Android app. This is facilitated by using the \gls{JNI}. It allows us to declare Kotlin functions as \lstinline|external|, signalling that their implementation is done in C++ rather than Kotlin. Arguments and return values can then be passed back and forth.
+
+Listings~\ref{lst:jniKotlin} and~\ref{lst:jniCpp} show examples for this: On the Kotlin side, the \gls{LLM} instance is represented by the \lstinline|LlamaCpp| class. More specifically, \lstinline|LlamaCpp| is an object. This is the Kotlin syntax for a singleton class. Multiple instances of the \gls{LLM} are avoided this way. On the C++ side, there are only the corresponding function implementations. The C++ functions are mostly wrappers for llama.cpp function calls. Inputs and outputs need to be converted between Kotlin and C++ data types, but most logic is implemented on the Kotlin side. While this design decision may introduce performance drawbacks (see \cref{ch:evaluation}), it makes maintenance significantly easier.
+
+% Add some space on top of listing to match bottom
+\vspace{0.25cm}
+
+\begin{lstlisting}[caption={[JNI: Kotlin side]{Example for the Kotlin side of the \gls{JNI}: State management for the \gls{LLM} using a function declared \lstinline|external| at the end.}}, label={lst:jniKotlin}]
+object LlamaCpp {
+    @Volatile
+    private var model = 0L
+
+    fun isInMemory(): Boolean {
+        return model != 0L
+    }
+
+    fun startInstance() {
+        if (isInMemory()) {
+            return
+        }
+
+        synchronized(lock = this) {
+            if (!isInMemory()) {
+                model = loadModel()
+            }
+        }
+    }
+
+    private external fun loadModel(path: String): Long
+}
+\end{lstlisting}
+
+% Move following paragraphs here to avoid page break in next listing
+On the Kotlin side, the \gls{LLM} is loaded into memory by calling the \lstinline|loadModel| function with the path to a \lstinline|.gguf| file as a string argument. This function is declared \lstinline|external|, so its implementation is in C++. On the C++ side, the Kotlin string is converted to a C++ string via the \gls{JNI}. In turn, the \lstinline|llama_model_load_from_file| function of llama.cpp is called, which takes the file path as C++ string and some default parameters as arguments. This returns the memory address of the \gls{LLM} as a pointer. Pointers only exist in C++, but can be cast to Kotlin long numbers as both are 64 bits in size. Therefore, \lstinline|loadModel| returns a Kotlin long number. This is stored in the attribute \lstinline|model| of the \lstinline|LlamaCpp| object, so the state of the \gls{LLM} can be managed: If \lstinline|model| is 0, the \gls{LLM} is not in memory. Otherwise it is and can be referenced via this attribute.
+
+The \lstinline|startInstance| function loads of the \gls{LLM} in a thread-safe manner by implementing a double-checked locking mechanism~\cite{ishizakiTransformingJavaPrograms2014}. This is commonly used with singleton classes in Java, and by extension, Kotlin. Unloading the \gls{LLM} mirrors this.
+
+% Add some space on top of listing to match bottom
+\vspace{0.25cm}
+
+\begin{lstlisting}[caption={[JNI: C++ side]{Example for the C++ side of the \gls{JNI}: Implementation of the function declared \lstinline|external| in Listing~\ref{lst:jniKotlin}.}}, label={lst:jniCpp}]
+extern "C" JNIEXPORT jlong JNICALL Java_org_vonderheidt_hips_utils_LlamaCpp_loadModel(JNIEnv* env, jobject /* thiz */, jstring jPath) {
+    jboolean isCopy = true;
+
+    const char* cppPath = env -> GetStringUTFChars(jPath, &isCopy);
+
+    llama_model_params params = llama_model_default_params();
+
+    llama_model* cppModel = llama_model_load_from_file(cppPath, params);
+
+    env -> ReleaseStringUTFChars(jPath, cppPath);
+
+    auto jModel = reinterpret_cast<jlong>(cppModel);
+
+    return jModel;
+}
+\end{lstlisting}
 
 \section{Token generation with llama.cpp}
 \label{sec:tokenGenerationWithLlamaCpp}
