@@ -187,6 +187,57 @@ extern "C" JNIEXPORT jlong JNICALL Java_org_vonderheidt_hips_utils_LlamaCpp_load
 
 \section{Token generation with llama.cpp}
 \label{sec:tokenGenerationWithLlamaCpp}
+In this section, we explain how token generation works with llama.cpp, i.e. how the \gls{LLM} generates text. We focus on the abstractions needed to work with llama.cpp, omitting any more general concepts. Most of this explanation is based on a great blog post by Omri Mallis~\cite{mallisUnderstandingHowLLM2023} and the examples given in the llama.cpp GitHub repository~\cite{gerganovGgerganovLlamacpp2024}. \cref{fig:llamaCppTokenGeneration} shows the high-level flow we need to understand.
+
+\begin{figure}
+    \begin{wide}
+        \captionsetup{width=\linewidth}
+        \includegraphics[width=\linewidth]{llama_cpp_high_level_flow.png}
+        \caption[llama.cpp: Token generation]{High-level flow of token generation in llama.cpp~\cite{mallisUnderstandingHowLLM2023}.}
+        \label{fig:llamaCppTokenGeneration}
+    \end{wide}
+\end{figure}
+
+Fundamentally, \glspl{LLM} iteratively complete any text they are given as input~\cite{mallisUnderstandingHowLLM2023}. We call this input a prompt. The generated completion is returned as output. We call this output the response. In \cref{fig:llamaCppTokenGeneration}, the prompt is "Quantum mechanics is a fundamental theory of physics that" and the response (after one iteration) is "provides"~\cite{mallisUnderstandingHowLLM2023}.
+
+First, we need to understand an important distinction: The \gls{LLM} and its state. In the llama.cpp source code, the \gls{LLM} is called \lstinline|model|. Its state is called \lstinline|ctx| (short for context)~\cite{gerganovGgerganovLlamacpp2024}. The \lstinline|model| itself is stateless. This can be demonstrated by its idempotence: Consider one instance of a \lstinline|model| with an empty \lstinline|ctx|. When it is given a prompt, it will return a response. Reset the \lstinline|ctx| so it is empty again. If you give it the same prompt now, you will receive the same response again. Resetting the \lstinline|object| is important in our implementation to ensure reproducible results.
+
+A \lstinline|ctx| takes the memory address of a \lstinline|model| as argument when being created~\cite{gerganovGgerganovLlamacpp2024}. Thereby, it is attached to the \lstinline|model| instance. Token generation only needs to access the \lstinline|ctx|. Resetting the \lstinline|ctx| works by unloading it from memory and loading a new \lstinline|ctx| attached to the same \lstinline|model| instance into memory. The implementation is analogous to loading and unloading the \gls{LLM} as shown in \cref{sec:jni}. However, the following paragraphs will only refer to the \gls{LLM} for readability, abstracting the \lstinline|ctx| away.
+
+The \gls{LLM} starts processing the prompt by tokenizing it. This means that the prompt is not just split into words, but dismantled further into sub-word units called tokens~\cite{mallisUnderstandingHowLLM2023}. In \cref{fig:llamaCppTokenGeneration}, for example the word "Quantum" is composed of the tokens "Quant" and "um". A token can be represented as a string, which is depicted in~\cref{fig:llamaCppTokenGeneration}, or as an integer, which is then called the token ID~\cite{mallisUnderstandingHowLLM2023}. After tokenization, the \gls{LLM} first works with the token IDs before converting the tokens further into other representations (see below).
+
+A common tokenization algorithm is \gls{BPE}~\cite{sennrichNeuralMachineTranslation2016}. Popular tokenizers using \gls{BPE} include Google's SentencePiece~\cite{googleGoogleSentencepiece2024}, which is used in Stegasuras~\cite{zieglerHarvardnlpNeuralSteganography2025,zieglerStegasuras2025}, and OpenAI's TikToken~\cite{openaiOpenaiTiktoken2025}, which is used in our \gls{LLM} of choice, Llama 3.2 1B~\cite{metaMetallamaLlamamodels2025}.
+
+In llama.cpp, the tokens to be processed are stored in a separate data structure called a \lstinline|batch|. During the first iteration, the batch contains all tokens of the prompt. During subsequent iterations, the batch only contains the last sampled token (see below for a definition of sampling)~\cite{gerganovGgerganovLlamacpp2024}.
+
+To complete the prompt, the \gls{LLM} needs to predict which tokens are likely to come next. To be comparable, the tokens need to be converted into a more structured representation. Each token in the prompt is converted into a vector, called an embedding~\cite{mallisUnderstandingHowLLM2023}. These vectors can be stacked to form the embedding matrix~\cite{mallisUnderstandingHowLLM2023}. \cref{fig:llamaCppEmbedding} shows the embedding matrix in detail. Its dimensions are \lstinline|n_tokens| $\times$ \lstinline|n_embd|. \lstinline|n_tokens| is the number of tokens in the prompt. \lstinline|n_embd| is the dimension of the vectors representing the tokens, which is specific to each \gls{LLM}~\cite{mallisUnderstandingHowLLM2023}.
+
+\begin{figure}
+    \begin{wide}
+        \centering
+        \captionsetup{width=\linewidth}
+        \includegraphics[width=0.5\linewidth]{llama_cpp_embedding.png}
+        \caption[llama.cpp: Embedding matrix]{Details of the embedding matrix in llama.cpp~\cite{mallisUnderstandingHowLLM2023}. \lstinline|n_embd| is specific to the \gls{LLM}. The value depicted here is for Llama 2, a predecessor of Llama 3.2.}
+        \label{fig:llamaCppEmbedding}
+    \end{wide}
+\end{figure}
+
+With the prompt effectively converted into a matrix representation, the \gls{LLM} can now apply \textit{transformations} to it, i.e. multiply it with a series of matrices. \cref{fig:llamaCppTokenGeneration} depicts this as "Transformer layers with self-attention". This is the core of the \textit{Transformer} architecture introduced in 2017, which is the basis for most \glspl{LLM} today~\cite{vaswaniAttentionAllYou2023} (see \cref{sec:aShortHistoryOfLLMs} for some more details). Different variants of the Transformer architecture exist, namely encoder-decoder or decoder-only~\cite{mallisUnderstandingHowLLM2023}. They each come with their own strengths and weaknesses, the discussion of which is out of scope for this thesis. For us, it is only relevant that we want to support as many \glspl{LLM} as possible. This means we have to check if an encoding step is required before performing the decoding step. Fortunately, llama.cpp abstracts this away behind a simple function call each~\cite{gerganovGgerganovLlamacpp2024}. The result of these transformations is a matrix of logits, i.e. of unnormalized probabilities for the prediction of the next token~\cite{mallisUnderstandingHowLLM2023}. \cref{fig:llamaCppLogits} shows the logits matrix in detail. Its dimensions are \lstinline|n_tokens| $\times$ \lstinline|n_vocab|. \lstinline|n_vocab| is the vocabulary size specific to the \gls{LLM}, i.e. the number of tokens it knows~\cite{mallisUnderstandingHowLLM2023}.
+
+\begin{figure}
+    \begin{wide}
+        \captionsetup{width=\linewidth}
+        \includegraphics[width=\linewidth]{llama_cpp_logits.png}
+        \caption[llama.cpp: Logit matrix]{Details of the logit matrix in llama.cpp~\cite{mallisUnderstandingHowLLM2023}. Also shown is the last transformation layer, i.e. the last intermediate matrix being multiplied with a fixed "output" matrix. This is not to be confused with the output of the \gls{LLM} as defined earlier.}
+        \label{fig:llamaCppLogits}
+    \end{wide}
+\end{figure}
+
+Each row of the logit matrix corresponds to a token in the prompt. It contains the logits (think: probabilities) for every token in the vocabulary to follow this token of the prompt. In other words, only the last row of the logit matrix is relevant for us, as it contains the logits for the last token of the prompt~\cite{mallisUnderstandingHowLLM2023}. This is highlighted in \cref{fig:llamaCppLogits}. Generally, these logits will be normalized to the interval $[0,1]$ using a softmax function (see \cref{sec:arithmeticCoding}). Only then they are interpretable as probabilities~\cite{mallisUnderstandingHowLLM2023,turnerIntroductionTransformers2024}.
+
+Now we need to select the token to complete the prompt with based on the probabilities. This is called sampling~\cite{mallisUnderstandingHowLLM2023}. We will implement our own logic to encode information by sampling certain tokens, i.e. to encode the secret message when performing steganography (see \cref{sec:steganographyEncodingDecoding}). Furthermore, there are various different general-purpose sampling methods. The simplest is greedy sampling. Greedy sampling just selects the token with the highest probability to come next~\cite{mallisUnderstandingHowLLM2023}. This will be used in our implementation to finish the last sentence of the cover text when there is nothing of the secret message left to encode (see \cref{sec:finishingTheLastSentence}). Other common approaches are temperature sampling and top-k sampling~\cite{mallisUnderstandingHowLLM2023}. In temperature sampling, the probabilities are scaled with $1/temperature$ to modify their distribution. For $temperature < 1$ the distribution gets steeper around the most likely token, making the response more coherent. For $temperature > 1$ the distribution gets flatter, making the response less coherent ("more creative")~\cite{mallisUnderstandingHowLLM2023}. Top-k sampling only considers the tokens with the top k probabilities~\cite{mallisUnderstandingHowLLM2023}. Temperature sampling and top-k sampling will be combined when the \lstinline|Arithmetic| setting for steganography is chosen (see \cref{sec:settingsScreen,sec:arithmeticCoding} for details)~\cite{zieglerHarvardnlpNeuralSteganography2025}.
+
+When a token is sampled, it is appended to the prompt to construct the response~\cite{mallisUnderstandingHowLLM2023}. The full response is built iteratively, so this output is used as input for the next iteration. This is also called autoregressive~\cite{mallisUnderstandingHowLLM2023}. Iteration stops when the \gls{LLM} samples a special end-of-generation token~\cite{gerganovGgerganovLlamacpp2024}. While the response in principle is ready now, it still is represented as a vector of token IDs. Before being displayed to the user as a string, it needs to be detokenized~\cite{mallisUnderstandingHowLLM2023}. The response after one iteration is shown in \cref{fig:llamaCppTokenGeneration}, after sampling the token "provides".
 
 \section{Algorithms}
 \label{sec:algorithms}
