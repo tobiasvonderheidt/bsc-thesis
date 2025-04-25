@@ -278,6 +278,23 @@ However, UTF-8 also has a benefit over both Arithmetic and Huffman compression: 
 \label{sec:steganographyEncodingDecoding}
 The Stegasuras project implemented three steganography algorithms: Arithmetic, Bins and Huffman coding~\cite{zieglerNeuralLinguisticSteganography2019}. We implement Arithmetic and Huffman, dropping Bins entirely. This decision is based on Stegasuras evaluating Bins to perform significantly worse quantitatively and qualitatively, while Arithmetic and Huffman were on par with each other~\cite{zieglerNeuralLinguisticSteganography2019}.
 
+\subsubsection{The generic algorithm}
+\label{sec:theGenericAlgorithm}
+The algorithms demonstrated by Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} can be viewed as different implementations of a single generic algorithm, differing only in the logic used to encode information during token sampling. We explain the generic algorithm here.
+
+To \textbf{encode} the bits of a secret message into a cover text using a context, we tokenize the context first. We let the \gls{LLM} generate cover text tokens in a loop. This loop terminates when all bits are encoded and the last sentence of the cover text is finished. In every iteration, we let the \gls{LLM} calculate logits: First using the context tokens, then using the last cover text token we sampled. As logits can generally assume negative values, they need to be normalized to the $ [0, 1] $ interval to be interpretable as probabilities. This is done using a softmax function~\cite{turnerIntroductionTransformers2024}. \cref{eqn:softmax} shows a softmax function ($p_i$ = probability of token i, $l_i$ = logit of token i, $n_{vocab}$ = vocabulary size of the \gls{LLM}). It applies the exponential function to transform the logits to non-negative values. This is suitable as the exponential function is strictly monotonous in growth, therefore maintaining the order of the associated tokens.
+
+\begin{align}
+	p_i = \frac{\exp(l_i)}{\sum_{j=1}^{n_{vocab}} \exp(l_j)}
+	\label{eqn:softmax}
+\end{align}
+
+To avoid early termination, we need to manually suppress end-of-generation tokens by setting their probability to 0. Otherwise, we may render our secret message unrecoverable by not encoding all of its bits.
+
+If there are secret message bits left to encode, the algorithm-specific sampling logic is applied (see \cref{sec:arithmeticCoding,sec:huffmanCoding}). It samples cover text tokens based on the secret message bits using these probabilities. Otherwise, greedy sampling is applied to finish the last sentence of the cover text (see \cref{sec:finishingTheLastSentence}). After the last iteration, the sampled cover text tokens are detokenized to return the cover text.
+
+To \textbf{decode} a cover text back into a secret message bits using a context, we calculate the same probabilities as during encoding: We tokenize both context and cover text. In a loop through the cover text tokens, we let the \gls{LLM} calculate logits. Again first using the context tokens, then using the current cover text token. Now we only need to inverse the algorithm-specific sampling logic, deriving the secret message bits from the cover text tokens. After processing all cover text tokens, we return the binary secret message.
+
 \subsubsection{Arithmetic coding}
 \label{sec:arithmeticCoding}
 
