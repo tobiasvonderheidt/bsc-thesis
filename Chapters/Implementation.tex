@@ -270,6 +270,9 @@ Arithmetic compression is probabilistic. It relies on the \gls{LLM} to predict t
 
 \subsubsection{UTF-8}
 \label{sec:utf8}
+Our last option to convert the secret message from string to binary is encoding it in UTF-8. UTF-8 is chosen as it is the most popular Unicode encoding: Around 90\% of all text on the internet is encoded in UTF-8~\cite{gleaveMakingCompressionAlgorithms2017}. It doesn't compress the secret message, but represents every character with one to four bytes instead~\cite{gleaveMakingCompressionAlgorithms2017}. This makes cover texts significantly longer. Therefore, it serves as a baseline to compare Arithmetic and Huffman compression to.
+
+However, UTF-8 also has a benefit over both Arithmetic and Huffman compression: It doesn't share any of their drawbacks. It isn't prone to probabilistic errors like Arithmetic compression (see \cref{sec:arithmeticCompression}) and doesn't need to store any metadata like Huffman compression (see \cref{sec:huffmanCompression}).
 
 \subsection{Steganography encoding/decoding}
 \label{sec:steganographyEncodingDecoding}
