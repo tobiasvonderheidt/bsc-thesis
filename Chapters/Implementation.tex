@@ -297,6 +297,26 @@ To \textbf{decode} a cover text back into a secret message bits using a context,
 
 \subsubsection{Arithmetic coding}
 \label{sec:arithmeticCoding}
+Arithmetic coding commonly refers to a compression algorithm where data is represented as a decimal number in the $ [0, 1) $ interval. This is achieved by iteratively narrowing the boundaries: In every iteration, a sub-interval is selected based on a part of the data and divided into further sub-intervals~\cite{rissanenArithmeticCoding1979}. \cref{fig:arithmeticCoding} provides a visualization. Arithmetic coding is popular because of its ability to compress data to near entropy~\cite{rissanenArithmeticCoding1979}. Stegasuras implements a variant of this using wider integer intervals that don't strictly narrow down to perform steganography~\cite{zieglerNeuralLinguisticSteganography2019,rubinArithmeticStreamCoding1979}.
+
+\begin{figure}
+    \begin{wide}
+        \captionsetup{width=\linewidth}
+        \includegraphics[width=0.75\linewidth]{arithmetic_coding.png}
+		\caption[Arithmetic coding]{A visualization of Arithmetic coding~\cite{zieglerNeuralLinguisticSteganography2019}. The secret message $m$ gets encoded into a cover text $y$ via a transformation $f$. Iterations are arranged as layers of a circle. The sub-intervals of $ [0, 1) $ get narrower the further they are away from the center.}
+        \label{fig:arithmeticCoding}
+    \end{wide}
+\end{figure}
+
+Arithmetic coding encodes the bits of a secret message into a cover text by sampling specific tokens. This uses the probabilities calculated by the \gls{LLM} and three parameters as input: \lstinline|temperature|, \lstinline|topK| and \lstinline|precision|. The former is a decimal number, the latter two are integers. \lstinline|topK| is a number of tokens not greater than $ n_{vocab} $, the vocabulary size of the \gls{LLM}. \lstinline|precision| is a number of bits. The output is the sampled cover text token.
+
+First, we assign tokens to sub-intervals of an integer interval based on their cumulated probabilities: We define our initial interval as $ [0, 2^{precision}] $. We scale the probabilities by $ 1/temperature $ and sort them in descending order. We only keep the tokens with the top $ min(max(2, n), topK) $ probabilities, where $ n $ is the number of probabilities greater than the inverse width of the current interval. This cuts off any probabilities that would round to 0 in subsequent steps. We rescale the probabilities to the range of the current interval and round them to integers. We cumulate these integer "probabilities" for every token. As those that would round to 0 were cut off, every token now corresponds to a unique integer in the current interval. Interpreting these as upper boundaries effectively assigns every token to a sub-interval.
+
+Then, we sample a cover text token by selecting a sub-interval based on secret message bits: In iteration $ i $, we consider the secret message bits at indices $ i $ to $ i + precision $. If there aren't enough bits left at the end, we do 0-padding. We interpret these bits as an integer and select the sub-interval this integer falls into. Thereby, we sample the token assigned to this sub-interval.
+
+Lastly, we determine how many bits were encoded in iteration $ i $ and calculate the new interval for the next iteration: We convert the boundaries of the selected sub-interval from integer to binary and count the number of most significant bits they share as prefix. This is the number of bits that were encoded in iteration $ i $, so we increment $ i $ by this. This results in the number of most significant bits that are now fixed when representing our secret message as a number in the initial interval. This would narrow our current interval down. As only using the integers within intervals limits resolution, we don't want them to strictly narrow down. Therefore, we manipulate the boundaries. We drop the fixed most significant bits and append as many 1s and 0s as least significant bits to receive the new upper and lower boundaries, respectively. This causes the boundaries to not strictly narrow down, but makes the interval as wide as possible for the next iteration.
+
+This description shows the complexity of Arithmetic coding. In particular, the interplay of \lstinline|topK| and \lstinline|precision| makes their effect on cover text quality hard to estimate. This is not the case with Huffman coding (see \cref{sec:huffmanCoding}). However, Arithmetic coding also comes with a significant strength. It aims to minimize \gls{KL} divergence at maximum compression~\cite{zieglerNeuralLinguisticSteganography2019}. The optimum of no \gls{KL} divergence can be achieved when Arithmetic coding is used with an unmodulated \gls{LLM} (i.e. \lstinline|temperature| = 1.0, \lstinline|topK| = $n_{vocab}$ and \lstinline|precision| = $ \lceil \log_2(topK) \rceil $). This is a powerful defense against machine-based attacks that try to identify statistical patterns in the generated cover texts~\cite{zieglerNeuralLinguisticSteganography2019}. Again, this is not the case with Huffman coding.
 
 \subsubsection{Huffman coding}
 \label{sec:huffmanCoding}
