@@ -187,7 +187,7 @@ extern "C" JNIEXPORT jlong JNICALL Java_org_vonderheidt_hips_utils_LlamaCpp_load
 
 \section{Token generation with llama.cpp}
 \label{sec:tokenGenerationWithLlamaCpp}
-In this section, we explain how token generation works with llama.cpp, i.e. how the \gls{LLM} generates text. We focus on the abstractions needed to work with llama.cpp, omitting any more general concepts. Most of this explanation is based on a great blog post by Omri Mallis~\cite{mallisUnderstandingHowLLM2023} and the examples given in the llama.cpp GitHub repository~\cite{gerganovGgerganovLlamacpp2024}. \cref{fig:llamaCppTokenGeneration} shows the high-level flow we need to understand.
+\gls{HiPS} uses the popular llama.cpp framework to run \glspl{LLM} locally. We explain how token generation works with llama.cpp, i.e. how the \gls{LLM} generates text. We focus on the abstractions needed to work with llama.cpp, omitting any more general concepts. Most of this explanation is based on a great blog post by Omri Mallis~\cite{mallisUnderstandingHowLLM2023} and the examples given in the llama.cpp GitHub repository~\cite{gerganovGgerganovLlamacpp2024}. \cref{fig:llamaCppTokenGeneration} shows the high-level flow we need to understand.
 
 \begin{figure}
     \begin{wide}
