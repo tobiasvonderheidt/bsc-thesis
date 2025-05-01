@@ -81,7 +81,7 @@ A number of projects more specific to Java/Kotlin were considered as well, but d
 \label{sec:howToSelectASuitableLLM}
 With llama.cpp selected as the runtime environment, we have a wide variety of compatible \glspl{LLM} readily available in the \lstinline|.gguf| file format~\cite{huggingfaceModelsHuggingFace2025}. Now we need to investigate which \glspl{LLM} are suitable for our use case.
 
-As we require our implementation to run on entry-level smartphones, hardware is the most limiting factor here. More specifically, the amount of usable memory needs to be large enough to hold the \gls{LLM} while performing inference, plus some overhead for the app process itself. \cref{tab:smartphonesTested} gives an overview of the smartphones used for testing. The baseline device is a Moto One Vision. Released to market in 2019, it can be considered entry-level by today's standards. According to the developer settings, around 1.5 GiB out of its 4 GiB of memory are available to applications, with the rest being occupied by the Android operating system. This implies that the file size of the \gls{LLM} can be around 1 GiB.
+As we require our implementation to run on entry-level smartphones, hardware is the most limiting factor here. More specifically, the amount of usable memory needs to be large enough to hold the \gls{LLM} while performing inference, plus some overhead for the app process itself. \cref{tab:smartphones} gives an overview of the smartphones used for testing. The baseline device is a Moto One Vision. Released to market in 2019, it can be considered entry-level by today's standards. According to the developer settings, around 1.5 GiB out of its 4 GiB of memory are available to applications, with the rest being occupied by the Android operating system. This implies that the file size of the \gls{LLM} can be around 1 GiB.
 
 \begin{table}
 	\centering
@@ -95,7 +95,7 @@ As we require our implementation to run on entry-level smartphones, hardware is 
 	\end{tabular}
 	% Use alternative short title for table of contents
 	\caption[Smartphones used in evaluation]{Smartphones used for performance evaluation.}
-	\label{tab:smartphonesTested}
+	\label{tab:smartphones}
 \end{table}
 
 Initially, this was good enough to browse HuggingFace~\cite{huggingfaceModelsHuggingFace2025} and find some \gls{LLM} that would run on our hardware. But to make an educated decision, we need to understand which specifications of a \gls{LLM} determine its resource usage and output quality. The most detailed information about a specific \gls{LLM} can be found in the model card, which effectively is the \lstinline|README.md| of its repository~\cite{mitchellModelCardsModel2019,huggingfaceModelCards}. A model card is supposed to describe all relevant aspects of the \gls{LLM}, e.g. its architecture, fine-tuning, training dataset, natural languages, license, use cases and limitations~\cite{mitchellModelCardsModel2019,huggingfaceModelCards}. Unfortunately, the information given in model cards often is incomplete or vague. Alternatively we can consult the file naming convention, which is used a lot more uniformly. Consider this file name of a Llama 3.2 1B quantization~\cite{gerganovGgerganovGgml2024,huggingfaceGGUF}:
