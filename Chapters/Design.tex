@@ -68,14 +68,14 @@ Of course, llama.cpp has some downsides too. As it is a C++ library, it will mak
 
 \subsection{Other options}
 \label{sec:otherOptions}
-Besides the three major frameworks discussed above, many others were encountered. A selection shall be presented here, to eventually consider them in future work:
+Besides the three major frameworks discussed above, we also investigated many others. To eventually consider them in future projects, we present a selection of the most noteworthy ones here:
 \begin{itemize}
-	\item Jax, developed by Google, is being marketed as a possible successor to TensorFlow~\cite{jaxJaxmlJax2025}. While it is a research project, it is not an official Google product yet. Main problem was again the availability of \glspl{LLM} in the required format.
-	\item ONNX Runtime, developed by Microsoft, promises to be a unified runtime for \glspl{LLM} across formats, platforms and programming languages~\cite{onnxruntimedevelopersONNXRuntime2018,onnxruntimeONNXRuntimeHome}. While this mean it could support quantized \glspl{LLM} in the \lstinline|.gguf| file format, availability of example projects was an issue again.
-	\item Mozilla's llamafile, promising to be able to run \glspl{LLM} from a single file~\cite{mozillaMozillaOchoLlamafile2025,hoodIntroducingLlamafileMozilla2023}. Builds on top of llama.cpp, which already does this.
+	\item Jax, developed by Google, is being marketed as a possible successor to TensorFlow~\cite{jaxJaxmlJax2025}. As it is still a research project, it is not an official Google product yet. The main problem was again the availability of \glspl{LLM} in the required format.
+	\item ONNX Runtime, developed by Microsoft, promises to be a unified runtime for \glspl{LLM} across formats, platforms and programming languages~\cite{onnxruntimedevelopersONNXRuntime2018,onnxruntimeONNXRuntimeHome}. While this means it could support quantized \glspl{LLM} in the \lstinline|.gguf| file format, availability of example projects was an issue again.
+	\item llamafile, developed by Mozilla, promises to run \glspl{LLM} from a single file~\cite{mozillaMozillaOchoLlamafile2025,hoodIntroducingLlamafileMozilla2023}. As it is built on top of llama.cpp, which already does this, there is no obvious benefit for us.
 \end{itemize}
 
-A number of projects more specific to Java/Kotlin were considered as well, but dropped mostly due to lack of popularity.
+We considered a number of projects more specific to Java/Kotlin as well, but dropped them mostly due to lack of popularity and active maintenance.
 
 \section{How to select a suitable large language model}
 \label{sec:howToSelectASuitableLLM}
