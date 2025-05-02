@@ -13,16 +13,7 @@ We will focus on the technologies that are unique to our implementation, therefo
 	\item We integrate some C++ code to run the \gls{LLM} using the llama.cpp library~\cite{gerganovGgerganovLlamacpp2024}.
 \end{itemize}
 
-Furthermore, the following dependencies were added to the default Android Studio project (in chronological order of commits):
-\begin{itemize}
-	\item The Androidx Navigation Compose library for navigation between screens.
-	\item The Androidx Material Icons Extended library for some icons.
-	\item The Androidx DataStore Preferences library to store app settings.
-	\item The Androidx Room library to access a local SQLite database (requires \gls{KSP} plugin~\cite{googleGoogleKsp2025} for annotations).
-	\item The Kotlinx Serialization library~\cite{kotlinKotlinKotlinxserialization2025} for serialization.
-\end{itemize}
-
-By preferring native Android and Kotlin libraries, we introduce as little third party dependencies as possible. This aligns with the requirements detailed in \cref{sec:makingAVirtueOutOfNecessity}.
+Other than that, we only rely on native Androidx and Kotlinx libraries to introduce as little third party dependencies as possible. This aligns with the requirements detailed in \cref{sec:makingAVirtueOutOfNecessity}.
 
 \section{How to run large language models on Android}
 \label{sec:howToRunLLMsOnAndroid}
