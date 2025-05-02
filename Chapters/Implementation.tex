@@ -5,7 +5,7 @@
 %************************************************
 \glsresetall % Resets all acronyms to not used
 
-\gls{HiPS} is our implementation of text-based steganography on Android. We discuss the details of our app as follows: First, we give a high-level overview of our app in \cref{sec:overviewOfTheApp}. Then we show how Java/Kotlin and C++ code can interact using the \gls{JNI} in \cref{sec:jni}. We introduce all necessary abstractions to understand token generation with llama.cpp in \cref{sec:tokenGenerationWithLlamaCpp}. We explain the algorithms used in \cref{sec:algorithms}. So far, this is what is needed to port the functionality of Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} to Android.
+\gls{HiPS} is our implementation of text-based steganography on Android. We discuss the details of our app as follows: First, we give a high-level overview of our app in \cref{sec:overviewOfTheApp}. Then we show how Java/Kotlin and C++ code can interact using the \gls{JNI} in \cref{sec:jni}. We introduce all necessary abstractions to understand token generation with llama.cpp in \cref{sec:tokenGenerationWithLlamaCpp}. We explain the algorithms used in \cref{sec:algorithms}. This is what is needed to port the functionality of Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} to Android.
 
 We expand this functionality already in \cref{sec:algorithms} by implementing another compression algorithm. Then we show how to improve cover text quality in \cref{sec:finishingTheLastSentence,sec:creatingAConversationBetweenCoverTexts,sec:emojis}: First we show how to finish the last sentence without artefacts, then how to create a conversation, and lastly how to generate emojis.
 
