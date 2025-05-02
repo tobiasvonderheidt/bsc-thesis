@@ -9,10 +9,8 @@ In this chapter, we will discuss the important design decisions for our implemen
 
 We will focus on the technologies that are unique to our implementation, therefore the full tech stack shall only be mentioned here briefly:
 \begin{itemize}
-	\item The app is written in Kotlin~\cite{kotlinKotlinProgrammingLanguage}, with Jetpack Compose as a \gls{UI} framework.
-	\item Besides the Android \gls{SDK}, we use the \gls{NDK} to integrate some C++ code into our app.
-	\item The \gls{LLM} is run using the llama.cpp library~\cite{gerganovGgerganovLlamacpp2024}.
-	\item Our \gls{IDE} of choice is Android Studio, which comes with Gradle~\cite{gradleGradleBuildTool2025} as a build system (includes CMake~\cite{cmakeCMakeUpgradeYour} via the \gls{NDK}).
+	\item Our app is mainly written in Kotlin~\cite{kotlinKotlinProgrammingLanguage}, with Jetpack Compose as a \gls{UI} framework.
+	\item We integrate some C++ code to run the \gls{LLM} using the llama.cpp library~\cite{gerganovGgerganovLlamacpp2024}.
 \end{itemize}
 
 Furthermore, the following dependencies were added to the default Android Studio project (in chronological order of commits):
@@ -28,7 +26,7 @@ By preferring native Android and Kotlin libraries, we introduce as little third 
 
 \section{How to run large language models on Android}
 \label{sec:howToRunLLMsOnAndroid}
-When approaching the topic of this thesis, the first major task was to research ways to run a \gls{LLM} locally on an Android smartphone. The Android platform restricts our choice of runtime environments to those that support the \gls{JVM}~\cite{ruggiaDarkSideNative2025}. Relevant programming languages therefore are Java, and by extension, Kotlin. Other programming languages that compile to Java Byte Code exist (e.g. Scala), but are not well-supported on Android~\cite{ruggiaDarkSideNative2025}. Furthermore, we have the option of including C++ code into our Android app by using the Android \gls{NDK}. Communication between Java/Kotlin and C++ code is facilitated via the \gls{JNI}~\cite{ruggiaDarkSideNative2025} (see \cref{ch:implementation} for details).
+When approaching the topic of this thesis, the first major task was to research ways to run a \gls{LLM} locally on an Android smartphone. The Android platform restricts our choice of runtime environments to those that support the \gls{JVM}~\cite{ruggiaDarkSideNative2025}. Relevant programming languages therefore are Java, and by extension, Kotlin. Other programming languages that compile to Java Byte Code exist (e.g. Scala), but are not well-supported on Android~\cite{ruggiaDarkSideNative2025}. Furthermore, we have the option of including C++ code into our Android app. Communication between Java/Kotlin and C++ code is facilitated via the \gls{JNI}~\cite{ruggiaDarkSideNative2025} (see \cref{ch:implementation} for details).
 
 \subsection{PyTorch}
 \label{sec:pyTorch}
