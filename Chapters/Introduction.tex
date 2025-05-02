@@ -19,13 +19,13 @@ We implement steganography with two algorithms demonstrated in a project called 
 
 \begin{enumerate}
     \item Convert the secret message from string to binary, compressing it in the process.
-    \item Encrypt the secret message bits.
-    \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the encrypted bits.
+    \item Encrypt the secret message bits (optional).
+    \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the secret message bits.
 \end{enumerate}
 
-The popular llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024} is used to run \glspl{LLM} locally. This choice allows us to access a broad range of \glspl{LLM} readily available in the \lstinline|.gguf| file format on platforms like HuggingFace~\cite{huggingfaceModelsHuggingFace2025}. Adapting our implementation to different devices becomes as easy as swapping out the \gls{LLM}: We are able to deploy a small\footnote{Note that there is no clear definition when a language model is considered \textit{large}. For our purposes, any modern language model is called \gls{LLM}.} \gls{LLM} on an entry-level smartphone the same way we deploy a large \gls{LLM} on a flagship.
+We use the popular llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024} to run \glspl{LLM} locally. This choice gives us to access a broad range of \glspl{LLM} readily available on platforms like HuggingFace~\cite{huggingfaceModelsHuggingFace2025}. Adapting our implementation to different devices becomes as easy as swapping out the \gls{LLM}: We are able to deploy a small \gls{LLM} on an entry-level smartphone the same way we deploy a large \gls{LLM} on a flagship\footnote{Note that there is no clear definition when a language model is considered \textit{large}. For our purposes, any modern language model is called \gls{LLM}.}.
 
-Overall, our app creates value and ensures its longevity by fulfilling the following requirements:
+Our app creates value and ensures its longevity by fulfilling the following requirements:
 
 \begin{enumerate}
     \item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
@@ -34,4 +34,4 @@ Overall, our app creates value and ensures its longevity by fulfilling the follo
     \item Make the \gls{LLM} swappable.
 \end{enumerate}
 
-Lastly, we conducted a survey amongst students of TU Darmstadt to evaluate the plausibility of our cover texts in comparison to real chat conversations. This resulted in profound insights into the linguistics of chat messages and serves as a starting point for further optimizations of cover text quality. By creating a well-documented, easy-to-maintain implementation of text-based steganography on Android, we open up many opportunities for further research to be conducted at SEEMOO.
+Lastly, we conduct a survey amongst students of TU Darmstadt to evaluate the plausibility of our cover texts in comparison to real chat conversations. This delivers profound insights into the linguistics of chat messages and serves as a starting point for further optimizations of cover text quality. By creating a well-documented, easy-to-maintain implementation of text-based steganography on Android, we open up many opportunities for further research to be conducted at SEEMOO.
