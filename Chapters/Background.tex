@@ -45,7 +45,12 @@ As steganography effectively hides the fact that there is secret communication h
 
 Steganography can also secure a communication channel that doesn't allow any other security mechanisms. This can be demonstrated especially well with text-based steganography, as it has a distinct advantage: It is independent from any one communication medium~\cite{zieglerNeuralLinguisticSteganography2019}. For example, a cover text can be sent digitally as a chat message or e-mail, but it can also be spoken during a phone call, hand-written in a letter or printed in a newspaper.
 
-Lastly, an attacker can try to detect and break steganography by performing steganalysis. For text-based steganography, steganalysis focusses on finding patterns in cover texts~\cite{wuGenerativeTextSteganography2024}. This can be done by humans or machines. While human steganalysis is only suitable for small amounts of cover texts, machine steganalysis can process large amounts of cover texts to identify statistical patterns~\cite{yangSeSyLinguisticSteganalysis2022,wuGenerativeTextSteganography2024}.
+Lastly, an attacker can try to detect and break steganography by performing steganalysis~\cite{yangSeSyLinguisticSteganalysis2022}. Our implementation of text-based steganography should be robust against different steganalysis approaches. To maximize robustness, we deduct the following requirement:
+\begin{itemize}
+    \item Our implementation should create a chat conversation between cover texts by generating them with a \gls{LLM}. This is to make the cover texts as believable as possible.
+\end{itemize}
+
+Steganalysis can be done by humans or machines, depending on the criteria to be analyzed and the amount of data to be processed~\cite{zieglerNeuralLinguisticSteganography2019}. Due to the personal nature of chat messages, our steganalysis focusses on their unique linguistic characteristics (e.g. use of emojis) and is done by humans (see \cref{sec:qualitativeEvaluation}).
 
 \subsection{Relation to cryptography}
 \label{sec:relationToCryptography}
