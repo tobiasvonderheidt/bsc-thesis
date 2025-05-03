@@ -71,9 +71,7 @@ However, this doesn't outweigh the disadvantages. The colour table has to be exc
 
 \section{Steganography with large language models}
 \label{sec:steganographyWithLLMs}
-In the last section, we investigated how text-based steganography can be performed without involving \glspl{LLM}. Historical approaches were mostly edit-based, as the ability to generate coherent text was limited~\cite{zieglerNeuralLinguisticSteganography2019}. This changed with the introduction of the Transformer architecture~\cite{vaswaniAttentionAllYou2023} in 2017, which laid the foundation for the popular \gls{AI} chatbots we know today.
-
-In this section, we first consider high-level approaches that only involve prompting the \gls{LLM} to perform steganography. Then, we consider low-level approaches that manipulate the token generation of the \gls{LLM}. This finally leads us to the paper this thesis is based on~\cite{zieglerNeuralLinguisticSteganography2019}.
+While steganography approaches without \glspl{LLM} are already able to fulfill some of our requirements, they all suffer from low encoding efficiency. Therefore, we now consider steganography approaches with \glspl{LLM}. First, we restrict ourselves to high-level access via prompting. Then we investigate a low-level solution by manipulating token generation. This finally leads us to the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, which this thesis is based on.
 
 \subsection{High-level: Prompting}
 \label{sec:highLevelPrompting}
