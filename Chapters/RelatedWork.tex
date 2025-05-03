@@ -5,9 +5,7 @@
 %*****************************************
 \glsresetall % Resets all acronyms to not used
 
-As \cref{ch:background} has manifested, the desire for privacy is something fundamental to humans, and they have been highly inventive in how to implement mechanisms that preserve it. The modern fruits of this labour are the fields of cryptography and steganography. While cryptography is strict, requiring rigorous mathematics and peer reviews, steganography allows us to be more creative - some even call it an "ancient art"~\cite{bennettLinguisticSteganographySurvey2004}. This is enabled by violating Kerckhoffs' principle, as detailed in \cref{sec:formalizingSteganography}.
-
-Therefore, an exhaustive discussion of text-based steganography methods related to the implementation presented in this thesis is not possible. Instead, this chapter will go through some selected works, in chronological order. The selection is limited to text-based steganography methods that are suitable for digital communication, as there are text-based methods that might be more suitable for printed text (e.g. encoding information by shifting words or lines~\cite{lowDocumentMarkingIdentification1995}). We progress from simple to more sophisticated approaches, highlighting their advantages and disadvantages over our implementation. This allows us to answer the question: Why use \glspl{LLM} at all?
+Steganography is often described as both the art and science of hiding information~\cite{bennettLinguisticSteganographySurvey2004}. As its forms are only limited by our creativity, an exhaustive discussion is not possible. Instead, we discuss some selected works. We progress from simple to more sophisticated approaches to ultimately answer the question: Why use \glspl{LLM} at all?
 
 \section{Text-based steganography without large language models}
 \label{sec:textBasedSteganographyWithoutLLMs}
