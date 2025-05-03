@@ -9,7 +9,7 @@ Steganography is often described as both the art and science of hiding informati
 
 \section{Steganography without large language models}
 \label{sec:steganographyWithoutLLMs}
-Text-based steganography methods can be grouped into two categories: edit-based or generation-based~\cite{zieglerNeuralLinguisticSteganography2019,bennettLinguisticSteganographySurvey2004}. In edit-based approaches, the cover text is a user input that gets edited to encode information~\cite{zieglerNeuralLinguisticSteganography2019}. In generation-based approaches, the cover text is generated token-wise, with information is being encoded through the selection of each token~\cite{zieglerNeuralLinguisticSteganography2019}. As the rapid progress made in \glspl{LLM} since the introduction of the Transformer architecture~\cite{vaswaniAttentionAllYou2023} is still very young, historical steganography approaches had to deal with the very limited ability of generating semantically meaningful text. This made edit-based approaches attractive, even though their encoding efficiency is an order of magnitude lower~\cite{zieglerNeuralLinguisticSteganography2019}.
+As we implement an Android app to perform text-based steganography locally on smartphones, hardware resources are our strongest limitation. While \glspl{LLM} are a popular option to perform this kind of steganography~\cite{zieglerNeuralLinguisticSteganography2019}, running them is very resource-intensive. Therefore, we first consider some approaches without \glspl{LLM}.
 
 \subsection{Mimicking}
 \label{sec:mimicking}
