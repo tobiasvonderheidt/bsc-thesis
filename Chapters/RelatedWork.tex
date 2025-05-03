@@ -13,27 +13,9 @@ Therefore, an exhaustive discussion of text-based steganography methods related 
 \label{sec:textBasedSteganographyWithoutLLMs}
 Text-based steganography methods can be grouped into two categories: edit-based or generation-based~\cite{zieglerNeuralLinguisticSteganography2019,bennettLinguisticSteganographySurvey2004}. In edit-based approaches, the cover text is a user input that gets edited to encode information~\cite{zieglerNeuralLinguisticSteganography2019}. In generation-based approaches, the cover text is generated token-wise, with information is being encoded through the selection of each token~\cite{zieglerNeuralLinguisticSteganography2019}. As the rapid progress made in \glspl{LLM} since the introduction of the Transformer architecture~\cite{vaswaniAttentionAllYou2023} is still very young, historical steganography approaches had to deal with the very limited ability of generating semantically meaningful text. This made edit-based approaches attractive, even though their encoding efficiency is an order of magnitude lower~\cite{zieglerNeuralLinguisticSteganography2019}.
 
-\subsection{Whitespaces}
-\label{sec:whitespaces}
-A demonstration of edit-based steganography from as early as the year 2000 is still available online today at Spammimic~\cite{spammimicSpammimic2000,dembartEndUserHide2001,bennettLinguisticSteganographySurvey2004}. It takes both a secret message and a cover text as user inputs, then edits the cover text by inserting whitespaces to encode the secret message. \cref{fig:spammimicWhitespaces} shows an example output.
-
-\begin{figure}
-    \begin{wide}
-        \centering
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=0.75\linewidth]{spammimic_whitespaces.png}
-        \caption[Spammimic: Whitespaces]{Steganography in whitespaces with Spammimic~\cite{spammimicSpammimic2000}, made visible by highlighting the text. Both the secret message "hello world" and the unedited cover text "This is totally not a cover text." were user inputs.}
-        \label{fig:spammimicWhitespaces}
-    \end{wide}
-\end{figure}
-
-The strength of this approach in particular is that it is very unlikely to be spotted by an attacker. Unnecessary whitespaces are created regularly by any user of a computer, e.g. as a result of formatting errors or as leftovers from editing a text. As only whitespaces are added, the user has full control over cover text quality. Furthermore, this approach can be transferred to text that is not natural language, i.e. to programming languages. Most programming languages do not rely on whitespaces for their semantics, but use explicit syntax like braces, brackets and parentheses. Encoding a secret message into whitespaces of code would therefore be very likely to keep the program functional. Assuming changes are tracked via a version control system such as Git, the integrity of the cover text would also be ensured.
-
-But the whitespace approach is prone to fail in many typical scenarios of everyday life, where natural language is relevant. Furthermore, it loses an important advantage of text-based steganography over other steganography areas such as image-based steganography, which is independence from the communication medium. Cover texts can not only be sent digitally, but can also be hand-written in a letter or printed in a newspaper, or said over a phone call. If any of the latter is done with an edited cover text as shown in~\cref{fig:spammimicWhitespaces}, it will get corrupted. Whitespaces are lost in non-digital communication channels, rendering the encoded secret message unrecoverable. But this is even possible when using digital communication channels, as~\cref{fig:spammimicWhitespaces} mentions too. Many e-mail clients and instant messengers trim leading and trailing whitespaces to save on bandwidth~\cite{shirali-shahrezaTextSteganographySMS2007}, which would again corrupt the cover text.
-
 \subsection{Mimicking}
 \label{sec:mimicking}
-Spammimic offers generation-based approaches without involving \glspl{LLM}~\cite{spammimicSpammimic2000}. Most notably, secret messages can be encoded into spam e-mails (hence the name). \cref{fig:spammimicSpamEmail} shows an example output. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
+A demonstration of generation-based steganography without involving \glspl{LLM} from as early as the year 2000 is still available online today at Spammimic~\cite{spammimicSpammimic2000,dembartEndUserHide2001,bennettLinguisticSteganographySurvey2004}. Secret messages can be encoded into spam e-mails. \cref{fig:spammimicSpamEmail} shows an example output. This is done using context-free grammars and mimic functions (hence the name)~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
 
 \begin{figure}
     \begin{wide}
