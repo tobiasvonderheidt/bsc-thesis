@@ -13,21 +13,21 @@ As we implement an Android app to perform text-based steganography locally on sm
 
 \subsection{Mimicking}
 \label{sec:mimicking}
-A demonstration of generation-based steganography without involving \glspl{LLM} from as early as the year 2000 is still available online today at Spammimic~\cite{spammimicSpammimic2000,dembartEndUserHide2001,bennettLinguisticSteganographySurvey2004}. Secret messages can be encoded into spam e-mails. \cref{fig:spammimicSpamEmail} shows an example output. This is done using context-free grammars and mimic functions (hence the name)~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
+Spammimic is a demonstration of text-based steganography without \glspl{LLM} from as early as 2001~\cite{spammimicSpammimic2000}. Secret messages are encoded into cover texts that look like spam e-mails. \cref{fig:spammimicSpamEmail} shows an example. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
 
 \begin{figure}
     \begin{wide}
         \centering
         \captionsetup{width=\linewidth}
-        \includegraphics[width=0.75\linewidth]{spammimic_spam_email.png}
+        \includegraphics[width=0.5\linewidth]{spammimic_spam_email.png}
         \caption[Spammimic]{Steganography in spam e-mails with Spammimic~\cite{spammimicSpammimic2000}. Only the secret message "hello world" was user input.}
         \label{fig:spammimicSpamEmail}
     \end{wide}
 \end{figure}
 
-This approach already introduces a number of benefits. Plausible cover texts for a given topic are generated with minimal computing resources, as the output is returned seemingly instantaneous. The choice of spam e-mails as a topic is particularly beneficial, as it will lower an attacker's expectation of cover text quality considerably. Consequently, reading spam e-mails is rather tiring, so an attacker would have to resort to a statistical steganalysis to find irregularities. As spam e-mails are a common part of modern everyday life, cover texts could even be "broadcast" to any number of recipients that includes the intended one. This would obfuscate who is communicating with whom, thereby causing the attacker high costs in searching for the secret message~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}. The vast majority of unintended recipients is likely to delete it without a second thought and would therefore not pose a security risk. Arbitrary plain text messages (i.e. spam e-mails that don't encode a secret message) could be sent in-between to make steganalysis harder by obfuscating when secret communication is happening. Lastly, this approach is robust when using non-digital communication channels, as it does not rely on whitespaces.
+This approach already fulfills some of our requirements. It generates plausible cover texts for a given topic with minimal computing resources. The topic can be chosen by exchanging the grammar~\cite{spammimicSpammimic2000}. Generating spam e-mails is particularly beneficial as it lowers an attacker's expectation of cover text quality. It allows us to hide our communication amongst other e-mail traffic, obfuscating when a secret communication is happening. We may even send our cover texts to any number of recipients that includes the intended one, to obfuscate who is communicating with whom. Both would increase an attacker's costs significantly~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}.
 
-But there are still several signifcant drawbacks to the spam e-mail approach. As can quickly be seen when playing around with Spammimic, the cover texts it generates are repetitive. This makes a statistical steganalysis seem promising, e.g. trying to map the letters of the alphabet in the secret message to certain phrases in the generated cover text. The topic of cover texts is hard to exchange as a corresponding grammar is needed, whose creation or acquisition in turn requires expert knowledge. This is not comparable to \glspl{LLM}, where behaviour is controlled via a system prompt that can be exposed to any layman user as a natural language text input. Lastly, encoding is very inefficient here. Any secret message longer than a few words creates cover texts of implausible length, even for a spam e-mail.
+But there are several drawbacks. Users would have to handle different grammars for different chat conversations. Creating grammars requires expert knowledge. This can't be expected from the average user. In contrast, \glspl{LLM} can be influenced by natural language commands. This can be expected from any layman user. Furthermore, encoding efficiency is low. Any secret message longer than a few words generates cover texts of implausible length, even for a spam e-mail.
 
 \subsection{Substitution}
 \label{sec:substitution}
