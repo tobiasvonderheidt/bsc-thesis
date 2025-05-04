@@ -28,7 +28,7 @@ Beyond that, we only rely on native Androidx and Kotlinx libraries to introduce 
 
 \section{How to run large language models on Android}
 \label{sec:howToRunLLMsOnAndroid}
-When approaching the topic of this thesis, the first major task was to research ways to run a \gls{LLM} locally on an Android smartphone. The Android platform restricts our choice of runtime environments to those that support the \gls{JVM}~\cite{ruggiaDarkSideNative2025}. Relevant programming languages therefore are Java, and by extension, Kotlin. Other programming languages that compile to Java Byte Code exist (e.g. Scala), but are not well-supported on Android~\cite{ruggiaDarkSideNative2025}. Furthermore, we have the option of including C++ code into our Android app. Communication between Java/Kotlin and C++ code is facilitated via the \gls{JNI}~\cite{ruggiaDarkSideNative2025} (see \cref{sec:jni} for details).
+To implement steganography as demonstrated by Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019} on Android, we have to find a \gls{LLM} runtime that supports the \gls{JVM}~\cite{ruggiaDarkSideNative2025}. This restricts our choice of programming languages to Java and Kotlin~\cite{ruggiaDarkSideNative2025}, which conflicts with the Python library PyTorch used by Stegasuras. By including C++ code via the \gls{JNI}~\cite{ruggiaDarkSideNative2025}, we find llama.cpp as a solution~\cite{gerganovGgerganovLlamacpp2024}.
 
 \subsection{PyTorch}
 \label{sec:pyTorch}
