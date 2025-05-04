@@ -7,6 +7,25 @@
 
 To implement steganography with local \glspl{LLM} on Android, we have to make some important design decisions. This encompasses the choice of \gls{LLM} and the framework to run it. To support these decisions, we revisit the Stegasuras project, which our app is based on.
 
+\section{Overview}
+\label{sec:overview}
+Our work is based on the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, which demonstrates how to perform steganography by manipulating token generation of a \gls{LLM}. Fundamentally, it works as follows: First, we convert a secret message from string to binary. Then, we encode it into a cover text by letting the \gls{LLM} sample tokens to complete a given context based on the secret message bits. Stegasuras has a modular architecture, as it implements multiple algorithms for each of the two steps. This approach is promising for fulfilling the requirements we set ourselves in \cref{ch:introduction}:
+\begin{enumerate}
+    \item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
+    \item Run the \gls{LLM} locally on an Android smartphone, i.e. don't require any internet connection for the steganography itself.
+    \item Achieve acceptable performance on entry-level devices.
+    \item Make the \gls{LLM} swappable.
+\end{enumerate}
+
+But as Stegasuras uses GPT-2 as \gls{LLM}, it is not state-of-the-art anymore. Furthermore, it uses the PyTorch framework to run the \gls{LLM}. As a Python library, PyTorch can't natively be run on Android. Therefore, we investigate modern \glspl{LLM} and the frameworks to run them in \cref{sec:howToRunLLMsOnAndroid,sec:howToSelectASuitableLLM}. This results in the following architecture:
+\begin{itemize}
+	\item Our app is mainly written in Kotlin, with Jetpack Compose as a \gls{UI} framework. This is to ensure easy maintainability.
+	\item We integrate some C++ code to run the \gls{LLM} using the llama.cpp library~\cite{gerganovGgerganovLlamacpp2024}. This gives us access to a wide range of \glspl{LLM} readily available in the \lstinline|.gguf| file format.
+	\item We use Llama 3.2 1B as \gls{LLM} for our evaluation. This is because it is able to hold a conversation while being small enough to run on entry-level smartphones.
+\end{itemize}
+
+Beyond that, we only rely on native Androidx and Kotlinx libraries to introduce as little third party dependencies as possible.
+
 \section{How to run large language models on Android}
 \label{sec:howToRunLLMsOnAndroid}
 When approaching the topic of this thesis, the first major task was to research ways to run a \gls{LLM} locally on an Android smartphone. The Android platform restricts our choice of runtime environments to those that support the \gls{JVM}~\cite{ruggiaDarkSideNative2025}. Relevant programming languages therefore are Java, and by extension, Kotlin. Other programming languages that compile to Java Byte Code exist (e.g. Scala), but are not well-supported on Android~\cite{ruggiaDarkSideNative2025}. Furthermore, we have the option of including C++ code into our Android app. Communication between Java/Kotlin and C++ code is facilitated via the \gls{JNI}~\cite{ruggiaDarkSideNative2025} (see \cref{sec:jni} for details).
