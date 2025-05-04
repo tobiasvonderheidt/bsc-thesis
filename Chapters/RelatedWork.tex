@@ -25,7 +25,7 @@ Spammimic is a demonstration of text-based steganography without \glspl{LLM} fro
     \end{wide}
 \end{figure}
 
-This approach already fulfills some of our requirements. It generates plausible cover texts for a given topic with minimal computing resources. The topic can be chosen by exchanging the grammar~\cite{spammimicSpammimic2000}. Generating spam e-mails is particularly beneficial as it lowers an attacker's expectation of cover text quality. It allows us to hide our communication amongst other e-mail traffic, obfuscating when a secret communication is happening. We may even send our cover texts to any number of recipients that includes the intended one, to obfuscate who is communicating with whom. Both would increase an attacker's costs significantly~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}.
+This approach already fulfills some of the requirements we set ourselves in \cref{ch:introduction}. It generates plausible cover texts for a given topic with minimal computing resources. The topic can be chosen by exchanging the grammar~\cite{spammimicSpammimic2000}. Generating spam e-mails is particularly beneficial as it lowers an attacker's expectation of cover text quality. It allows us to hide our communication amongst other e-mail traffic, obfuscating when a secret communication is happening. We may even send our cover texts to any number of recipients that includes the intended one, to obfuscate who is communicating with whom. Both would increase an attacker's costs significantly~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}.
 
 But there are several drawbacks. Users would have to handle different grammars for different chat conversations. Creating grammars requires expert knowledge. This can't be expected from the average user. In contrast, \glspl{LLM} can be influenced by natural language commands. This can be expected from any layman user. Furthermore, encoding efficiency is low. Any secret message longer than a few words generates cover texts of implausible length, even for a spam e-mail.
 
@@ -33,7 +33,7 @@ But there are several drawbacks. Users would have to handle different grammars f
 \label{sec:substitution}
 When \gls{SMS} was prevalent, its character limits led users to abbreviate common terms (e.g. "u" for "you"). As shown in ~\cite{shirali-shahrezaTextSteganographySMS2007}, this can be leveraged to perform steganography. We define a dictionary of terms and their abbreviations and let the user write a chat message without any abbreviations. By either substituting terms with their abbreviations or not, we encode 1s and 0s.
 
-This approach again fulfills some of our requirements. It uses minimal computing resources and gives the user great control over cover text quality. Semantically meaningful conversations are guaranteed as terms and their abbreviations are synonymous. A customizable dictionary is already built into the keyboards of most smartphones, so it is easily accessible for the average user.
+This approach again fulfills some of the requirements we set ourselves in \cref{ch:introduction}. It uses minimal computing resources and gives the user great control over cover text quality. Semantically meaningful conversations are guaranteed as terms and their abbreviations are synonymous. A customizable dictionary is already built into the keyboards of most smartphones, so it is easily accessible for the average user.
 
 But there still are several drawbacks. As many terms don't have an abbreviation in practice, encoding efficiency is low. This is aggravated when abbreviations are used for entire sentences instead of individual words (e.g. "ily" instead of "i luv u" for "i love you"). Abbreviations can be undesired for readability or even inappropriate in formal communication. Other substitution approaches (e.g. substituting synonym words) solve these issues only partially.
 
@@ -71,7 +71,7 @@ However, this doesn't outweigh the disadvantages. The colour table has to be exc
 
 \section{Steganography with large language models}
 \label{sec:steganographyWithLLMs}
-While steganography approaches without \glspl{LLM} are already able to fulfill some of our requirements, they all suffer from low encoding efficiency. Therefore, we now consider steganography approaches with \glspl{LLM}. First, we restrict ourselves to high-level access via prompting. Then we investigate a low-level solution by manipulating token generation. This finally leads us to the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, which this thesis is based on.
+While steganography approaches without \glspl{LLM} are already able to fulfill some of the requirements we set ourselves in \cref{ch:introduction}, they all suffer from low encoding efficiency. Therefore, we now consider steganography approaches with \glspl{LLM}. First, we restrict ourselves to high-level access via prompting. Then we investigate a low-level solution by manipulating token generation. This finally leads us to the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, which this thesis is based on.
 
 \subsection{High-level: Prompting}
 \label{sec:highLevelPrompting}
@@ -79,7 +79,7 @@ With state-of-the-art \glspl{LLM} reaching hundreds of billions of parameters, t
 
 This approach is attractive because it doesn't require a low-level understanding of \glspl{LLM} to implement it. The topic of cover texts can be controlled via the words in sets A and B, which in turn can be generated via a prompt. Encoding efficiency can be controlled via the number of word sets to choose from. It may also be relatively efficient with computing resources, as the \gls{LLM} is only needed for encoding, not for decoding.
 
-However, this approach conflicts with most of our requirements. As can quickly be tested with tools like LM Studio, small \glspl{LLM} that are feasible to run locally on a smartphone are not able to perform the encoding logic. We would have to rely on a service provider to host a large \gls{LLM} for us. Making core functionality of our app dependent on third parties increases attack surface significantly (see \cref{sec:largeLanguageModels}). Therefore, the simplicity of this approach is not worth it for us.
+However, this approach conflicts with most of the requirements we set ourselves in \cref{ch:introduction}. As can quickly be tested with tools like LM Studio, small \glspl{LLM} that are feasible to run locally on a smartphone are not able to perform the encoding logic. We would have to rely on a service provider to host a large \gls{LLM} for us. Making core functionality of our app dependent on third parties increases attack surface significantly (see \cref{sec:largeLanguageModels}). Therefore, the simplicity of this approach is not worth it for us.
 
 \subsection{Low-level: Manipulating token generation}
 \label{sec:lowLevelManipulatingTokenGeneration}
