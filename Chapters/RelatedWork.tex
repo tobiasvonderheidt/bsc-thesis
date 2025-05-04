@@ -59,11 +59,11 @@ However, the Stegasuras implementation also has some shortcomings we can improve
 
 Solving this edge case is the first contribution we make. Beyond that, we port the implementation to the state-of-the-art llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024}, which gives us access to a wide range of \glspl{LLM} to scale with available hardware. We implement an Android app to run all of this locally on a smartphone. We extend the functionality by creating chat conversations, allowing users to arbitrarily interleave cover texts and plain texts. We improve cover text quality by including emojis and exposing a system prompt, allowing users to influence \gls{LLM} behaviour on a lower level via a natural language command. This way, we are able to solve the real-world problem of protecting people's privacy against eavesdroppers with steganography.
 
-\subsection{Further considerations}
+\section{Further considerations}
 \label{sec:furtherConsiderations}
 In the previous sections of this chapter, we discussed several approaches for text-based steganography without \glspl{LLM}. In particular, we focussed on the extent to which each approach fulfilled our central requirement - creating a believable chat conversation from cover texts. In this section, we take a look at some more text-based steganography approaches, still without involving \glspl{LLM}. But the focus is now on some more refined requirements, stemming from more specific use cases. Lastly, we take a look at an example of what not to do.
 
-\subsubsection{Localization}
+\subsection{Localization}
 \label{sec:localization}
 The overall goal of our implementation can be stated as follows: Use text-based steganography in chat messages to protect against attackers. While multiple aspects of this definition can and will be refined over the course of this thesis, we now discuss one aspect that is largely omitted otherwise: Localization. Our standard assumption is that both users and attackers are English-speaking. This may be fine for academic purposes, but in practice a lot of the potential users of our implementation are in countries where English is not an official language. This is especially relevant for protection from political persecution under authoritarian regimes.
 
@@ -73,7 +73,7 @@ Characteristics specific to languages with non-Latin scripts can be leveraged fo
 
 The challenge of localization can partially be solved with our implementation. As~\cref{ch:design} will explain in detail, one goal of our implementation is that the \gls{LLM} can be swapped out easily. While this doesn't enable us to leverage language specifics like changing character shapes, it enables us to choose a \gls{LLM} that was trained on any natural language desired. If we are able to generate semantically meaningful cover texts in any language, further localization might not be necessary. We could use our implementation in any geo-political conflict, deliberately speaking (or not speaking) the language of the attacker. But verifying this is unfortunately out of scope for this thesis, as the author doesn't speak any languages with non-Latin scripts.
 
-\subsubsection{A negative example}
+\subsection{A negative example}
 \label{sec:aNegativeExample}
 Lastly, we take a look at an example of what not to do, so we can avoid it in our implementation. We recall that steganography violates Kerckhoffs' principle~\cite{andersonLimitsSteganography1998}, as the security of a steganographic system partially relies on the attacker not knowing the system - or that it is being used in the first place.
 
