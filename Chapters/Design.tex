@@ -5,15 +5,7 @@
 %************************************************
 \glsresetall % Resets all acronyms to not used
 
-In this chapter, we will discuss the important design decisions for our implementation of text-based steganography on Android. First, we will investigate what options currently exist to run \glspl{LLM} locally. Then, we will show how to select a suitable \gls{LLM} for our use case.
-
-We will focus on the technologies that are unique to our implementation, therefore the full tech stack shall only be mentioned here briefly:
-\begin{itemize}
-	\item Our app is mainly written in Kotlin~\cite{kotlinKotlinProgrammingLanguage}, with Jetpack Compose as a \gls{UI} framework.
-	\item We integrate some C++ code to run the \gls{LLM} using the llama.cpp library~\cite{gerganovGgerganovLlamacpp2024}.
-\end{itemize}
-
-Other than that, we only rely on native Androidx and Kotlinx libraries to introduce as little third party dependencies as possible. This aligns with the requirements detailed in \cref{ch:introduction}.
+To implement steganography with local \glspl{LLM} on Android, we have to make some important design decisions. This encompasses the choice of \gls{LLM} and the framework to run it. To support these decisions, we revisit the Stegasuras project, which our app is based on.
 
 \section{How to run large language models on Android}
 \label{sec:howToRunLLMsOnAndroid}
