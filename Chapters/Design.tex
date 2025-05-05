@@ -112,22 +112,22 @@ As we require our implementation to run on entry-level smartphones, hardware is 
 	\label{tab:smartphones}
 \end{table}
 
-Initially, this was good enough to browse HuggingFace~\cite{huggingfaceModelsHuggingFace2025} and find some \gls{LLM} that would run on our hardware. But to make an educated decision, we need to understand which specifications of a \gls{LLM} determine its resource usage and output quality. The most detailed information about a specific \gls{LLM} can be found in the model card, which effectively is the \lstinline|README.md| of its repository~\cite{mitchellModelCardsModel2019,huggingfaceModelCards}. A model card is supposed to describe all relevant aspects of the \gls{LLM}, e.g. its architecture, fine-tuning, training dataset, natural languages, license, use cases and limitations~\cite{mitchellModelCardsModel2019,huggingfaceModelCards}. Unfortunately, the information given in model cards often is incomplete or vague. Alternatively we can consult the file naming convention, which is used a lot more uniformly. Consider this file name of a Llama 3.2 1B quantization~\cite{gerganovGgerganovGgml2024,huggingfaceGGUF}:
+Initially, this was good enough to browse platforms like HuggingFace~\cite{huggingfaceModelsHuggingFace2025} and find some \gls{LLM} that would run on our hardware. But to make an educated decision, we need to understand which specifications of a \gls{LLM} determine its resource usage and output quality. The most detailed information about a \gls{LLM} can be found in its model card, which effectively is the \lstinline|README.md| of its repository~\cite{mitchellModelCardsModel2019,huggingfaceModelCards}. A model card is supposed to describe all relevant aspects of the \gls{LLM}, such as its architecture, fine-tuning, training dataset, natural languages, license, use cases, and limitations~\cite{mitchellModelCardsModel2019,huggingfaceModelCards}. Unfortunately, the information given in model cards often is incomplete or vague. Alternatively, we can consult the file naming convention, which is used a lot more uniformly. Consider this file name of a Llama 3.2 1B quantization~\cite{huggingquantsHuggingquantsLlama321BInstructQ4_K_MGGUFHugging2024}:
 
 \begin{center}
 	\lstinline|llama-3.2-1b-instruct-q4_k_m.gguf|
 \end{center}
 
 \begin{itemize}
-	\item \lstinline|llama-3.2| is the name and generation of the \gls{LLM}.
-	\item \lstinline|1b| is the parameter count of the \gls{LLM}, i.e. 1 billion parameters.
-	\item \lstinline|instruct| is the type of fine-tuning the \gls{LLM} underwent, i.e. it was fine-tuned for instruction-following tasks.
-	\item \lstinline|q4_k_m| is the level the \gls{LLM} was quantized to, i.e. 4 bits per parameter, and some settings used in the process.
+	\item \lstinline|llama-3.2| is the name and generation of the \gls{LLM}~\cite{metaMetallamaLlamamodels2025}.
+	\item \lstinline|1b| is the parameter count of the \gls{LLM}, i.e. 1 billion parameters~\cite{huggingfaceGGUF}.
+	\item \lstinline|instruct| is the type of fine-tuning the \gls{LLM} underwent, i.e. it was fine-tuned for instruction-following tasks~\cite{huggingfaceGGUF}.
+	\item \lstinline|q4_k_m| is the level the \gls{LLM} was quantized to, i.e. 4 bits per parameter, and some settings used in the process~\cite{huggingfaceGGUF}.
 \end{itemize}
 
-This highlights some specifications of the \gls{LLM}: parameter count, fine-tuning and quantization. While parameter count and quantization influence both resource usage and general output quality, fine-tuning only influences output quality given a specific use case. We used a 4 bit quantization of Llama 3.2 1B~\cite{huggingquantsHuggingquantsLlama321BInstructQ4_K_MGGUFHugging2024} during most of the development of our app as its file size is under 1 GiB. Different fine-tunings may be suitable for our use case, e.g. \lstinline|instruct| or \lstinline|chat| are likely to be preferred over \lstinline|coder| or \lstinline|math|. While a \lstinline|chat| fine-tuning may sound like the obvious choice, it is not as popular as the others. As we may get the \gls{LLM} to generate chat messages by \textit{instructing} it to do so, we chose an \lstinline|instruct| fine-tuning instead. However, judging different \gls{LLM} architectures in detail is out of scope for this thesis.
+This highlights some specifications of the \gls{LLM}: parameter count, fine-tuning and quantization. While parameter count and quantization influence both resource usage and general output quality, fine-tuning only influences output quality given a specific use case. Multiple fine-tunings may be suitable for our use case of creating a chat conversation from cover texts. For example, \lstinline|instruct| or \lstinline|chat| are likely to be preferred over \lstinline|coder| or \lstinline|math|. While a \lstinline|chat| fine-tuning may sound like the obvious choice, it is not as popular as the others. As we may get the \gls{LLM} to generate chat messages by \textit{instructing} it to do so, we chose an \lstinline|instruct| fine-tuning instead. However, judging different \gls{LLM} architectures in detail is out of scope for this thesis.
 
-With this knowledge, we created a selection of \glspl{LLM} that can hold a believable conversation. As our implementation on Android wasn't ready yet, we had to resort to running \glspl{LLM} on desktop using LM Studio. This was done on a Lenovo ThinkPad X1 Tablet (3rd gen) with 16 GiB of memory and an Intel i7-8550U processor. As will be detailed in \cref{sec:creatingAConversationBetweenCoverTexts}, for our implementation, the \gls{LLM} needs to be able to hold a believable conversation \textit{with itself}. We simulated this by opening two instances of LM Studio, both loading the same \gls{LLM} into memory. We gave the first instance a prompt that instructed it on how to start a conversation. While we tried multiple different approaches, they all specified the following requirements: The \gls{LLM} has to take on a certain role in a chat conversation. It has to talk about a certain topic that is typical for this role. Its tone has to be suitable for both role and topic, concerning e.g. use of phrases, abbreviations and emojis. The \gls{LLM} should then respond with a chat message fulfilling these requirements. \cref{fig:lmStudioA} shows examples of both prompt and response using Llama 3.2 1B.
+With this knowledge, we created a selection of \glspl{LLM} that can hold a believable conversation. As our implementation on Android wasn't ready yet, we had to resort to running \glspl{LLM} on desktop using LM Studio. This was done on a Lenovo ThinkPad X1 Tablet (3rd gen) with 16 GiB of memory and an Intel i7-8550U processor. As we set ourselves the requirement of creating a chat conversation from cover texts, users of our app should be able to let the \gls{LLM} generate cover texts that reply to other cover texts generated by their chat partners. Effectively, this means the \gls{LLM} talks to itself without knowing it. We simulated this by opening two instances of LM Studio, both loading the same \gls{LLM} into memory. We gave the first instance a prompt that instructed it on how to start a conversation. While we tried multiple different approaches, they all specified the following requirements: The \gls{LLM} has to take on a certain role in a chat conversation. It has to talk about a certain topic that is typical for this role. Its tone has to be suitable for both role and topic, concerning e.g. use of phrases, abbreviations and emojis. The \gls{LLM} should then respond with a chat message fulfilling these requirements. \cref{fig:lmStudioA} shows examples of both prompt and response using Llama 3.2 1B~\cite{huggingquantsHuggingquantsLlama321BInstructQ4_K_MGGUFHugging2024}.
 
 We then gave the second instance a prompt that instructed it on how to respond to the first instance. While we kept the structure of this prompt the same as detailed above, we tried variations in both role and tone. Roles may either be similar (e.g. two friends, two colleagues) or opposite (e.g. parent and child, employee and customer). The same goes for the tone. \cref{fig:lmStudioB} shows examples of both prompt and response for similar role and tone.
 
@@ -138,23 +138,23 @@ We then gave the second instance a prompt that instructed it on how to respond t
 		\begin{subfigure}{\linewidth}
 			\centering
 			\includegraphics[width=0.75\linewidth]{lm_studio_a.png}
-			\caption{The first instance of the LLM being instructed on how to start a conversation.}
+			\caption{The first instance of the \gls{LLM} being instructed on how to start a conversation.}
 			\label{fig:lmStudioA}
 		\end{subfigure}
 
 		\begin{subfigure}{\linewidth}
 			\centering
 			\includegraphics[width=0.75\linewidth]{lm_studio_b.png}
-			\caption{The second instance of the LLM being instructed on how to respond to the first instance.}
+			\caption{The second instance of the \gls{LLM} being instructed on how to respond to the first instance.}
 			\label{fig:lmStudioB}
 		\end{subfigure}
 
-		\caption[LM Studio]{Use of LM Studio for LLM selection.}
+		\caption[LM Studio]{Use of LM Studio for \gls{LLM} selection.}
 		\label{fig:lmStudio}
 	\end{wide}
 \end{figure}
 
-From then on, the two instances could talk to each other by copy-pasting their responses back and forth. \cref{tab:llmsTested} shows a selection of popular \glspl{LLM} that we tested using this method. The selection focusses on \glspl{LLM} with around 1 GiB in file size, to cover our requirement of acceptable performance on entry-level smartphones. On flagship devices, we would choose \glspl{LLM} with higher parameter count or higher number of bits in quantization.
+From then on, the two instances could talk to each other by copy-pasting their responses back and forth. \cref{tab:llmsTested} shows a selection of popular \glspl{LLM} that we tested using this method. As discussed above, we focus on \glspl{LLM} with around 1 GiB in file size to target entry-level smartphones. On flagship devices, we would choose \glspl{LLM} with higher parameter count or higher number of bits in quantization.
 
 % Windows displays file sizes in MiB, Android in MB
 % Declare acronym LLM in caption as it is used in column header
@@ -172,12 +172,8 @@ From then on, the two instances could talk to each other by copy-pasting their r
 		\bottomrule
 	\end{tabular}
 	% Use alternative short title for table of contents
-	\caption[Large language models]{Large language models (LLMs) that were considered.}
+	\caption[Large language models]{The \glspl{LLM} that we considered.}
 	\label{tab:llmsTested}
 \end{table}
 
-Llama 3.2 1B was preferred over the other \glspl{LLM} as it was able to create the most believable conversations in our subjective judgement. It tended to give longer answers and consequently hold the conversation for longer. It also is able to output emojis, which we can leverage to improve cover text quality. Furthermore, it achieved around 15~tokens/second when generating its response on our desktop system.
-
-Gemma 3 1B achieved similar quality and speeds compared to Llama 3.2 1B, but tended to give shorter answers and end the conversation early by itself. Qwen 2 1.5B and SmolLM 2 1.7B achieved similar quality and length compared to Llama 3.2 1B, but only at around half the speeds.
-
-Lastly, DeepSeek R1 1.5B was tested. Unlike the other \glspl{LLM}, it exposes a "chain of thought" leading up the the actual response~\cite{deepseek-aiDeepSeekR1IncentivizingReasoning2025}. While this may be beneficial for complex tasks like solving physics equations, it is not suitable for our use case. It spent around 30 seconds "thinking" before outputting its response. The thought process showed that it often understood our prompts slightly wrong, leading it to drop out of the requested role after a few messages.
+We prefer Llama 3.2 1B over the other \glspl{LLM} as it was able to create the most believable conversations in our subjective judgement. It tended to give longer answers and consequently hold the conversation for longer. It is able to output emojis, which we can leverage to improve cover text quality. Furthermore, it achieved around 15~tokens/second when generating its response on our desktop system. Gemma 3 1B achieved similar quality and speeds compared to Llama 3.2 1B, but tended to give shorter answers and end the conversation early by itself. Qwen 2 1.5B and SmolLM 2 1.7B achieved similar quality and length compared to Llama 3.2 1B, but only at around half the speeds. Lastly, DeepSeek R1 1.5B was tested. Unlike the other \glspl{LLM}, it exposes a "chain of thought" leading up the the actual response~\cite{deepseek-aiDeepSeekR1IncentivizingReasoning2025}. While this may be beneficial for complex tasks like solving equations, it is not suitable for our use case. It spent around 30 seconds "thinking" before outputting its response. The thought process showed that it often understood our prompts slightly wrong, leading it to drop out of the requested role after a few messages.
