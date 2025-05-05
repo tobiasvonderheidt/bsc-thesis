@@ -189,7 +189,7 @@ extern "C" JNIEXPORT jlong JNICALL Java_org_vonderheidt_hips_utils_LlamaCpp_load
     \begin{wide}
         \captionsetup{width=\linewidth}
         \includegraphics[width=\linewidth]{llama_cpp_high_level_flow.png}
-        \caption[llama.cpp: Token generation]{High-level flow of token generation in llama.cpp~\cite{mallisUnderstandingHowLLM2023}.}
+        \caption[llama.cpp: Token generation]{High-level flow of token generation in llama.cpp. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
         \label{fig:llamaCppHighLevelFlow}
     \end{wide}
 \end{figure}
@@ -213,7 +213,7 @@ To complete the prompt, the \gls{LLM} needs to predict which tokens are likely t
         \centering
         \captionsetup{width=\linewidth}
         \includegraphics[width=0.5\linewidth]{llama_cpp_embedding.png}
-        \caption[llama.cpp: Embedding matrix]{Details of the embedding matrix in llama.cpp~\cite{mallisUnderstandingHowLLM2023}. \lstinline|n_embd| is specific to the \gls{LLM}. The value depicted here is for Llama 2, a predecessor of Llama 3.2.}
+        \caption[llama.cpp: Embedding matrix]{Details of the embedding matrix in llama.cpp. \lstinline|n_embd| is specific to the \gls{LLM}. The value depicted here is for Llama 2, a predecessor of Llama 3.2. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
         \label{fig:llamaCppEmbedding}
     \end{wide}
 \end{figure}
@@ -224,7 +224,7 @@ With the prompt effectively converted into a matrix representation, the \gls{LLM
     \begin{wide}
         \captionsetup{width=\linewidth}
         \includegraphics[width=\linewidth]{llama_cpp_logits.png}
-        \caption[llama.cpp: Logit matrix]{Details of the logit matrix in llama.cpp~\cite{mallisUnderstandingHowLLM2023}. Also shown is the last transformation layer, i.e. the last intermediate matrix being multiplied with a fixed "output" matrix. This is not to be confused with the output of the \gls{LLM} as defined earlier.}
+        \caption[llama.cpp: Logit matrix]{Details of the logit matrix in llama.cpp. Also shown is the last transformation layer, i.e. the last intermediate matrix being multiplied with a fixed "output" matrix. This is not to be confused with the output of the \gls{LLM} as defined earlier. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
         \label{fig:llamaCppLogits}
     \end{wide}
 \end{figure}
@@ -308,7 +308,7 @@ Arithmetic coding commonly refers to a compression algorithm where data is repre
     \begin{wide}
         \captionsetup{width=\linewidth}
         \includegraphics[width=0.75\linewidth]{arithmetic_coding.png}
-		\caption[Arithmetic coding]{A visualization of Arithmetic coding~\cite{zieglerNeuralLinguisticSteganography2019}. The secret message $m$ gets encoded into a cover text $y$ via a transformation $f$. Iterations are arranged as layers of a circle. The sub-intervals of $ [0, 1) $ get narrower the further they are away from the center.}
+		\caption[Arithmetic coding]{A visualization of Arithmetic coding. The secret message $m$ gets encoded into a cover text $y$ via a transformation $f$. Iterations are arranged as layers of a circle. The sub-intervals of $ [0, 1) $ get narrower the further they are away from the center. Taken from~\cite{zieglerNeuralLinguisticSteganography2019}.}
         \label{fig:arithmeticCoding}
     \end{wide}
 \end{figure}
