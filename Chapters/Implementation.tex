@@ -237,13 +237,13 @@ When a token is sampled, it is appended to the prompt to construct the response~
 
 \section{Algorithms}
 \label{sec:algorithms}
-Our app implements algorithms to perform two major steps (see \cref{ch:introduction}):
+Our app implements algorithms to perform steganography in two steps:
 \begin{itemize}
     \item Convert the secret message from string to binary, compressing it in the process.
     \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the secret message bits.
 \end{itemize}
 
-We explain these algorithms and discuss their advantages and disadvantages over each other. This is intended as a high-level overview to support documentation of our code.
+We explain these algorithms and discuss their advantages and disadvantages over each other. This is intended as a high-level overview to support documentation of our code. Therefore, we explain them in the order they are called in during the encoding of a secret message.
 
 \subsection{Binary conversion and compression}
 \label{sec:binaryConversionAndCompression}
