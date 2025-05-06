@@ -243,7 +243,7 @@ Our app implements algorithms to perform steganography in two steps:
     \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the secret message bits.
 \end{itemize}
 
-We explain these algorithms and discuss their advantages and disadvantages over each other. This is intended as a high-level overview to support documentation of our code. Therefore, we explain them in the order they are called in during the encoding of a secret message.
+This can be viewed as a generic algorithm with exchangeable implementations for each of the two steps. For the first step, we implement UTF-8 conversion, Huffman compression and Arithmetic compression. For the second step, we implement Huffman coding and Arithmetic coding. We first discuss the generic algorithm, then the different implementations for each step. This is intended as a high-level overview to support documentation of our code.
 
 \subsection{The generic algorithm}
 \label{sec:theGenericAlgorithm}
