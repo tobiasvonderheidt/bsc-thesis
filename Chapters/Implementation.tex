@@ -9,7 +9,7 @@
 
 We discuss the details of our app as follows: First, we give a high-level overview in \cref{sec:overviewOfTheApp}. Then we show how Java/Kotlin and C++ code can interact using the \gls{JNI} in \cref{sec:javaNativeInterface}. We introduce all necessary abstractions to understand token generation with llama.cpp in \cref{sec:tokenGenerationWithLlamaCpp}. We explain the algorithms we used in \cref{sec:algorithms}. This is what is needed to port the functionality of Stegasuras to Android.
 
-We expand this functionality already in \cref{sec:algorithms} by implementing another compression algorithm. Then we show how to improve cover text quality in \cref{sec:finishingTheLastSentence,sec:creatingAConversationBetweenCoverTexts,sec:emojis}: First we show how to finish the last sentence of a cover text without artefacts, then how to create a conversation between them, and lastly how to generate emojis.
+We expand this functionality already in \cref{sec:algorithms} by showing how to finish the last sentence of a cover text without artefacts. Then we show how to improve cover text quality in \cref{sec:creatingAConversationBetweenCoverTexts,sec:emojis}: First we show how to create a conversation between them, then how to generate emojis when using the \gls{JNI}.
 
 \section{Overview of the app}
 \label{sec:overviewOfTheApp}
@@ -236,7 +236,7 @@ Based on the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019},
     \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the secret message bits.
 \end{itemize}
 
-This can be viewed as a generic algorithm with exchangeable implementations for each of the two steps. For the first step, we implement UTF-8 conversion, Huffman compression and Arithmetic compression. For the second step, we implement Huffman coding and Arithmetic coding\footnote{Stegasuras implements another algorithm called Bins coding. While Huffman and Arithmetic coding were on par in qualitative and quantitative steganalysis, Bins performed significantly worse~\cite{zieglerNeuralLinguisticSteganography2019}. Therefore, we don't implement it.}. We first discuss the generic algorithm, then the different implementations for each step. This is intended as a high-level overview to support documentation of our code.
+This can be viewed as a generic algorithm with exchangeable implementations for each of the two steps. For the first step, we implement UTF-8 conversion and Arithmetic compression. For the second step, we implement Huffman coding and Arithmetic coding\footnote{Stegasuras implements another algorithm called Bins coding. While Huffman and Arithmetic coding were on par in qualitative and quantitative steganalysis, Bins performed significantly worse~\cite{zieglerNeuralLinguisticSteganography2019}. Therefore, we don't implement it.}. We first discuss the generic algorithm, then the different implementations for each step. This is intended as a high-level overview to support documentation of our code.
 
 \subsection{The generic algorithm}
 \label{sec:theGenericAlgorithm}
