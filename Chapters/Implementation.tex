@@ -237,13 +237,13 @@ When a token is sampled, it is appended to the prompt to construct the response~
 
 \section{Algorithms}
 \label{sec:algorithms}
-Our app implements algorithms to perform steganography in two steps:
+Based on the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, we implement algorithms to perform steganography in two steps:
 \begin{itemize}
     \item Convert the secret message from string to binary, compressing it in the process.
     \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the secret message bits.
 \end{itemize}
 
-This can be viewed as a generic algorithm with exchangeable implementations for each of the two steps. For the first step, we implement UTF-8 conversion, Huffman compression and Arithmetic compression. For the second step, we implement Huffman coding and Arithmetic coding. We first discuss the generic algorithm, then the different implementations for each step. This is intended as a high-level overview to support documentation of our code.
+This can be viewed as a generic algorithm with exchangeable implementations for each of the two steps. For the first step, we implement UTF-8 conversion, Huffman compression and Arithmetic compression. For the second step, we implement Huffman coding and Arithmetic coding\footnote{Stegasuras implements another algorithm called Bins coding. While Huffman and Arithmetic coding were on par in qualitative and quantitative steganalysis, Bins performed significantly worse~\cite{zieglerNeuralLinguisticSteganography2019}. Therefore, we don't implement it.}. We first discuss the generic algorithm, then the different implementations for each step. This is intended as a high-level overview to support documentation of our code.
 
 \subsection{The generic algorithm}
 \label{sec:theGenericAlgorithm}
