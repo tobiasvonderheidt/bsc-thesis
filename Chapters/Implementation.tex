@@ -264,7 +264,7 @@ To \textbf{decode} a cover text back into secret message bits using a context, w
 
 \subsection{UTF-8}
 \label{sec:utf8}
-To convert the secret message from string to binary, we implement UTF-8 encoding. We chose UTF-8 as it is the most popular Unicode encoding: Around 90\% of all text on the internet is encoded in UTF-8~\cite{gleaveMakingCompressionAlgorithms2017}. It doesn't compress the secret message, but represents every character with one to four bytes instead~\cite{gleaveMakingCompressionAlgorithms2017}. This makes cover texts significantly longer. Therefore, it serves as a baseline to compare Arithmetic and Huffman compression to.
+To convert the secret message from string to binary, we implement UTF-8 encoding. We chose UTF-8 as it is the most popular Unicode encoding: Around 90\% of all text on the internet is encoded in UTF-8~\cite{gleaveMakingCompressionAlgorithms2017}. It doesn't compress the secret message, but represents every character with one to four bytes instead~\cite{gleaveMakingCompressionAlgorithms2017}. This makes cover texts significantly longer. Therefore, it serves as a baseline to compare Huffman and Arithmetic compression to.
 
 \subsection{Huffman}
 \label{sec:huffman}
