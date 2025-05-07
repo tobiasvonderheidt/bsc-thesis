@@ -47,6 +47,35 @@ To appeal to a large user base, we set ourselves the requirement of acceptable p
 
 However, our implementation shows a considerable performance deficit in comparison to other apps running \glspl{LLM} with llama.cpp: In \cref{sec:howToRunLLMsOnAndroid}, we found that we can achieve around to 5 tokens/second on the same smartphones. Overhead is similar on our flagship device, which achieved up to 4 tokens/second with our app versus up to 25 tokens/second with the other apps. This is likely because the other implementations we investigated perform token sampling in C++ rather than Kotlin. Therefore, they don't have to pass data through the \gls{JNI} for every token. We underestimated the impact of this design decision in the early phases of development due to lack of experience.
 
+\subsection{Compression}
+\label{sec:compression}
+To fool eavesdroppers with our cover texts, they have to be of plausible length. Therefore, we want to maximize efficiency when compressing the secret message while converting it from string to binary. Unfortunately, our implementation introduces some overhead. To clean up artefacts from greedy sampling in decoding, we append an ASCII NUL character to the string secret message. To allow for encryption, we prepend some padding to the binary secret message. Therefore, we implement Arithmetic compression. But it is not without downsides.
+
+Arithmetic compression relies on the \gls{LLM} predicting the secret message token-wise. As the secret message is arbitrary user input, the \gls{LLM} may not be able to predict it. This would cause the Arithmetic compression to fail. To increase reliability, we would maximize the \lstinline|precision| parameter. But unfortunately, there is a trade-off with compression ratio.
+
+To find our ideal \lstinline|precision| value, we make a series of measurements. We generate ten random sentences of up to five words each as secret messages. We compress these secret messages with Arithmetic compression for different \lstinline|precision| values and count the total number of resulting bits. As a baseline, we also encode the same secret messages with UTF-8 and count the total required bits. \cref{tab:compression} shows the results.
+
+\begin{table}
+	\centering
+	\begin{tabular}{@{} p{2.5cm} rr @{}} % @{} removes white spaces
+		\toprule
+		\tableheadline{Precision} & \tableheadline{Bits} & \tableheadline{Ratio} \\
+        \midrule
+        60                        &                 1824 &                 4.6\% \\
+		50                        &                 1304 &                31.8\% \\
+        40                        &                  968 &                49.4\% \\
+        30                        &                  840 &                56.1\% \\
+		\bottomrule
+	\end{tabular}
+	% Use alternative short title for table of contents
+	\caption[Compression measurements]{Ratio of Arithmetic compression to UTF-8 encoding for different values of the \lstinline|precision| parameter. Calculated from the total number of bits required to represent ten secret messages. UTF-8 required 1912 bits.}
+	\label{tab:compression}
+\end{table}
+
+At a \lstinline|precision| of 60 bits, our implementation of Arithmetic compression is only 4.6\% more efficient than UTF-8 conversion. As this is close to the maximum \lstinline|precision| of 62 bits our implementation allows, reliability is very high here. We lower the \lstinline|precision| in steps of 10 bits. At 20 bits, we were not able to compress all of our ten secret messages anymore as the \gls{LLM} couldn't predict the tokens in one of them. However, diminishing returns are significant at a \lstinline|precision| of around 40 bits, which is already 49.4\% more efficient than UTF-8 encoding. This is also the \lstinline|precision| that Stegasuras uses~\cite{zieglerHarvardnlpNeuralSteganography2025}. Therefore, we recommend this value for Arithmetic compression.
+
+After converting a secret message from string to binary, we have the choice of encoding it into a cover text via Huffman coding or Arithmetic coding. We compare their encoding efficiency by counting the cover text tokens they generate to encode the ten secret messages we used earlier. Arithmetic coding generated a total of 550 tokens, while Huffman coding generated 635 tokens. This makes Arithmetic coding 13.4\% more efficient. Therefore, we recommend it over Huffman coding.
+
 \subsection{Corrupted cover texts}
 \label{sec:corruptedCoverTexts}
 Due to the probabilistic nature of \glspl{LLM}, the responses they generate are hard to predict. But as \glspl{LLM} are stateless, their responses to a given prompt should be reproducible (see \cref{sec:tokenGenerationWithLlamaCpp} for details). In particular, this should apply to the cover text tokens generated during steganographic encoding and decoding. In our testing, we encountered some issues with this. While the vast majority of cover texts could be decoded, some were corrupted: For these cover texts, the token predictions of the \gls{LLM} were inconsistent between encoding and decoding. This renders the encoded secret messages unrecoverable.
