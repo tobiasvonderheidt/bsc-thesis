@@ -104,7 +104,7 @@ The delete button can only be pressed if the selected messages are at the end of
 	\end{wide}
 \end{figure}
 
-Below these buttons, there are various selectors, sliders and input fields for the parameters of our algorithms. They are arranged in the order of corresponding steps during the encoding of a secret message. First there is a selector for the conversion mode, i.e. for how to convert the secret message from string to binary. It offers \lstinline|Arithmetic (recommended)|, \lstinline|Huffman| and \lstinline|UTF-8| as options. \lstinline|UTF-8| serves as a baseline as it doesn't compress the secret message, while \lstinline|Arithmetic| compresses it using the \gls{LLM} and \lstinline|Huffman| compresses it without using the \gls{LLM} (see \cref{sec:binaryConversionAndCompression} for details).
+Below these buttons, there are various selectors, sliders and input fields for the parameters of our algorithms. They are arranged in the order of corresponding steps during the encoding of a secret message. First there is a selector for the conversion mode, i.e. for how to convert the secret message from string to binary. It offers \lstinline|Arithmetic (recommended)| and \lstinline|UTF-8| as options. \lstinline|UTF-8| serves as a baseline as it doesn't compress the secret message, while \lstinline|Arithmetic| compresses it using the \gls{LLM}.
 
 This is followed by an input field for a system prompt. This is a natural language command that can be passed to the \gls{LLM} to influence its behaviour (see \cref{sec:creatingAConversationBetweenCoverTexts} for details). This is relevant for the conversation screen, and for the home screen if the conversation switch there is toggled on.
 
