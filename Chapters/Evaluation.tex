@@ -19,7 +19,7 @@ Quantitative evaluation of our app focusses on three dimensions: Performance, ef
 
 \subsection{Performance}
 \label{sec:performance}
-To appeal to a larger user base, we have set ourselves the requirement of acceptable performance on entry-level devices (see \cref{ch:introduction}). We measure performance via the speed of token generation, as this is the main task of our app. \cref{tab:performance} shows the encoding and decoding speeds we achieved for every combination of smartphone and algorithm. The speeds were averaged over a conversation of ten cover texts, each encoding a random sentence of up to five words as secret message. With both of our entry-level devices measuring at around 1 token/second, user experience is smooth enough to fulfill our requirement.
+To appeal to a large user base, we set ourselves the requirement of acceptable performance on entry-level devices. We measure performance via the speed of token generation, as this is the main task of our app. \cref{tab:performance} shows the encoding and decoding speeds we achieved for every combination of smartphone and algorithm. The speeds were averaged over a conversation of ten cover texts, each encoding a random sentence of up to five words as secret message. With both of our entry-level devices measuring at around 1 token/second, user experience is smooth enough to fulfill our requirement.
 
 \begin{table}
 	\centering
@@ -45,7 +45,7 @@ To appeal to a larger user base, we have set ourselves the requirement of accept
 	\label{tab:performance}
 \end{table}
 
-However, our implementation shows a considerable performance deficit in comparison to other apps running llama.cpp: Up to 5 tokens/second can be achieved on our entry-level devices (see \cref{sec:howToRunLLMsOnAndroid}). This is likely because the other implementations we investigated perform token sampling in C++ rather than Kotlin. Therefore, they don't have to pass data through the \gls{JNI} for every token. This overhead was underestimated in the early phases of developing \gls{HiPS} due to lack of experience.
+However, our implementation shows a considerable performance deficit in comparison to other apps running \glspl{LLM} with llama.cpp: In \cref{sec:howToRunLLMsOnAndroid}, we found that we can achieve around to 5 tokens/second on the same smartphones. Overhead is similar on our flagship device, which achieved up to 4 tokens/second with our app versus up to 25 tokens/second with the other apps. This is likely because the other implementations we investigated perform token sampling in C++ rather than Kotlin. Therefore, they don't have to pass data through the \gls{JNI} for every token. We underestimated the impact of this design decision in the early phases of development due to lack of experience.
 
 \subsection{Corrupted cover texts}
 \label{sec:corruptedCoverTexts}
