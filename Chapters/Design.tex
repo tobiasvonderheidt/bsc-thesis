@@ -154,7 +154,7 @@ We then gave the second instance a prompt that instructed it on how to respond t
 	\end{wide}
 \end{figure}
 
-From then on, the two instances could talk to each other by copy-pasting their responses back and forth. \cref{tab:llmsTested} shows a selection of popular \glspl{LLM} that we tested using this method. As discussed above, we focus on \glspl{LLM} with around 1 GiB in file size to target entry-level smartphones. On flagship devices, we would choose \glspl{LLM} with higher parameter count or higher number of bits in quantization.
+From then on, the two instances could talk to each other by copy-pasting their responses back and forth. \cref{tab:largeLanguageModels} shows a selection of popular \glspl{LLM} that we tested using this method. As discussed above, we focus on \glspl{LLM} with around 1 GiB in file size to target entry-level smartphones. On flagship devices, we would choose \glspl{LLM} with higher parameter count or higher number of bits in quantization.
 
 % Windows displays file sizes in MiB, Android in MB
 % Declare acronym LLM in caption as it is used in column header
@@ -173,7 +173,7 @@ From then on, the two instances could talk to each other by copy-pasting their r
 	\end{tabular}
 	% Use alternative short title for table of contents
 	\caption[Large language models]{The \glspl{LLM} that we considered.}
-	\label{tab:llmsTested}
+	\label{tab:largeLanguageModels}
 \end{table}
 
 We prefer Llama 3.2 1B over the other \glspl{LLM} as it was able to create the most believable conversations in our subjective judgement. It tended to give longer answers and consequently hold the conversation for longer. It is able to output emojis, which we can leverage to improve cover text quality. Furthermore, it achieved around 15~tokens/second when generating its response on our desktop system. Gemma 3 1B achieved similar quality and speeds compared to Llama 3.2 1B, but tended to give shorter answers and end the conversation early by itself. Qwen 2 1.5B and SmolLM 2 1.7B achieved similar quality and length compared to Llama 3.2 1B, but only at around half the speeds. Lastly, DeepSeek R1 1.5B was tested. Unlike the other \glspl{LLM}, it exposes a "chain of thought" leading up the the actual response~\cite{deepseek-aiDeepSeekR1IncentivizingReasoning2025}. While this may be beneficial for complex tasks like solving equations, it is not suitable for our use case. It spent around 30 seconds "thinking" before outputting its response. The thought process showed that it often understood our prompts slightly wrong, leading it to drop out of the requested role after a few messages.
