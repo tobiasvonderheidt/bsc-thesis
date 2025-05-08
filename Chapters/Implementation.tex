@@ -20,24 +20,21 @@ The \gls{UI} of \gls{HiPS} consists of three screens: Home, conversation and set
 \cref{fig:homeScreen} shows the home screen of our app. The \gls{UI} is based on the Stegasuras demo~\cite{zieglerStegasuras2025}: We have two input fields, a mode selector for encode/decode, a switch to toggle conversation on/off, and a start button. Furthermore, we have icons in the top corners for navigation to the other screens.
 
 \begin{figure}
-	\begin{wide}
-		\captionsetup{width=\linewidth}
-		\begin{subfigure}{0.45\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{hips_home_screen_a.png}
-			\caption{Encoding of a secret message.}
-			\label{fig:homeScreenA}
-		\end{subfigure}
-        \hfill
-		\begin{subfigure}{0.45\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{hips_home_screen_b.png}
-			\caption{Decoding of a cover text.}
-			\label{fig:homeScreenB}
-		\end{subfigure}
-		\caption[HiPS: Home screen]{Standalone functionality of HiPS on the home screen.}
-		\label{fig:homeScreen}
-	\end{wide}
+    \captionsetup{width=\linewidth}
+    \centering
+    \begin{subfigure}{0.3\linewidth}
+        \includegraphics[width=\linewidth]{hips_home_screen_a.png}
+        \caption{Encoding a secret message.}
+        \label{fig:homeScreenA}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}{0.3\linewidth}
+        \includegraphics[width=\linewidth]{hips_home_screen_b.png}
+        \caption{Decoding a cover text.}
+        \label{fig:homeScreenB}
+    \end{subfigure}
+    \caption[HiPS: Home screen]{Standalone functionality of HiPS on the home screen.}
+    \label{fig:homeScreen}
 \end{figure}
 
 In encode mode, the input fields are for the context to generate a cover text from, and for the secret message to encode in the cover text. After pressing the start button, the cover text will be generated and displayed at the bottom. Tapping it copies it to the clipboard. In decode mode, the input fields are for the context and the cover text. After pressing the start button, the secret message will be displayed at the bottom.
