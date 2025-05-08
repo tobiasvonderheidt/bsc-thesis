@@ -13,19 +13,19 @@ One might think that modern instant messengers are equipped with sufficient secu
 
 A promising solution is presented by steganography. This technique involves concealing information within an inconspicuous cover signal. Possible cover signals include digital images, audio, video, or - most notably in this context - natural language text. Natural language in particular is suitable as a cover signal because it is independent from any one communication medium~\cite{zieglerNeuralLinguisticSteganography2019}. This can be leveraged to embed a sensitive \textit{secret message} into a generic \textit{cover text} to be sent as chat message~\cite{zieglerNeuralLinguisticSteganography2019}. As a result, even a physically present attacker could be misled, protecting the victim from potential harm. This approach introduces a layer of security currently missing in popular instant messengers.
 
-By implementing the core functionality of a chat app with built-in steganography on Android, we set the precedent for further research and development. Our app is called \gls{HiPS}\footnote{Source code is available at \url{https://github.com/tobiasvonderheidt/hips} (public) and mirrored at \url{https://dev.seemoo.tu-darmstadt.de/stud-theses/bsc-tobias-vonderheidt} (private).}. It runs a \gls{LLM} locally on the smartphone to generate the cover text for a given secret message and vice versa. As the scope of this thesis doesn't involve a server backend, users of our app can try the steganography in a demo conversation view. Furthermore, we offer a standalone functionality to use steganography with existing instant messengers by copy-pasting messages. This enables real-world users to protect themselves already today.
+By implementing the core functionality of a chat app with built-in steganography on Android, we set the precedent for further research and development. Our app is called \gls{HiPS}\footnote{Source code is available at \url{https://github.com/tobiasvonderheidt/hips}.}. It runs a \gls{LLM} locally on the smartphone to generate the cover text for a given secret message and vice versa. As the scope of this thesis doesn't involve a server backend, users of our app can try the steganography in a demo conversation view. Furthermore, we offer a standalone functionality to use steganography with existing instant messengers by copy-pasting messages. This enables real-world users to protect themselves already today.
 
 We implement steganography with two algorithms demonstrated in a project called Stegasuras~\cite{zieglerNeuralLinguisticSteganography2019}. Its modular architecture allows for future adaptations to which algorithms are used in each of the following steps:
 
 \begin{enumerate}
     \item Convert the secret message from string to binary, compressing it in the process.
-    \item Encrypt the secret message bits.
-    \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the encrypted bits.
+    \item Encrypt the secret message bits (optional).
+    \item Generate a cover text by completing a given context with the \gls{LLM}, thereby encoding the secret message bits.
 \end{enumerate}
 
-The popular llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024} is used to run \glspl{LLM} locally. This choice allows us to access a broad range of \glspl{LLM} readily available in the \lstinline|.gguf| file format on platforms like HuggingFace~\cite{huggingfaceModelsHuggingFace2025}. Adapting our implementation to different devices becomes as easy as swapping out the \gls{LLM}: We are able to deploy a small\footnote{Note that there is no clear definition when a language model is considered \textit{large}. For our purposes, any modern language model is called \gls{LLM}.} \gls{LLM} on an entry-level smartphone the same way we deploy a large \gls{LLM} on a flagship.
+We use the popular llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024} to run \glspl{LLM} locally. This choice gives us to access a broad range of \glspl{LLM} readily available on platforms like HuggingFace~\cite{huggingfaceModelsHuggingFace2025}. Adapting our implementation to different devices becomes as easy as swapping out the \gls{LLM}: We are able to deploy a small \gls{LLM} on an entry-level smartphone the same way we deploy a large \gls{LLM} on a flagship\footnote{Note that there is no clear definition when a language model is considered \textit{large}. For our purposes, any modern language model is called \gls{LLM}.}.
 
-Overall, our app creates value and ensures its longevity by fulfilling the following requirements:
+Our app creates value and ensures its longevity by fulfilling the following requirements:
 
 \begin{enumerate}
     \item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
@@ -34,4 +34,4 @@ Overall, our app creates value and ensures its longevity by fulfilling the follo
     \item Make the \gls{LLM} swappable.
 \end{enumerate}
 
-Lastly, we conducted a survey amongst students of TU Darmstadt to evaluate the plausibility of our cover texts in comparison to real chat conversations. This resulted in profound insights into the linguistics of chat messages and serves as a starting point for further optimizations of cover text quality. By creating a well-documented, easy-to-maintain implementation of text-based steganography on Android, we open up many opportunities for further research to be conducted at SEEMOO.
+Lastly, we conduct a survey amongst students of TU Darmstadt to evaluate the plausibility of our cover texts in comparison to real chat conversations. This delivers profound insights into the linguistics of chat messages and serves as a starting point for further optimizations of cover text quality. By creating a well-documented, easy-to-maintain implementation of text-based steganography on Android, we open up many opportunities for further research to be conducted at SEEMOO.
