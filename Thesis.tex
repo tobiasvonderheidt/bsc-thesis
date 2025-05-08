@@ -65,7 +65,6 @@
 
 % Toggle true if you want to have a style with smaller margins
 \newtoggle{adrianstyle}
-\PassOptionsToPackage{adrianstyle=\iftoggle{adrianstyle}{true}{false}}{classicthesis}
 
 % Toggle true to use parts (as in a book; for long theses only!)
 \newtoggle{parts}
@@ -78,6 +77,7 @@
 %\toggletrue{phd}
 %\toggletrue{parts}
 %\toggletrue{adrianstyle}
+\PassOptionsToPackage{adrianstyle=\iftoggle{adrianstyle}{true}{false}}{classicthesis}
 \iftoggle{phd}{\toggletrue{parts}}{}
 
 % ------------------------------------------------------------------
