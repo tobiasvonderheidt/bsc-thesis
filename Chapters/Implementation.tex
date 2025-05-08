@@ -170,12 +170,11 @@ extern "C" JNIEXPORT jlong JNICALL Java_org_vonderheidt_hips_utils_LlamaCpp_load
 \gls{HiPS} uses the popular llama.cpp framework to run \glspl{LLM} locally. We explain how token generation works with llama.cpp, i.e. how the \gls{LLM} generates text. We focus on the abstractions needed to work with llama.cpp, omitting any more general concepts. Most of this explanation is based on a great blog post by Omri Mallis~\cite{mallisUnderstandingHowLLM2023} and the examples given in the llama.cpp GitHub repository~\cite{gerganovGgerganovLlamacpp2024}. \cref{fig:llamaCppHighLevelFlow} shows the high-level flow we need to understand.
 
 \begin{figure}
-    \begin{wide}
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=\linewidth]{llama_cpp_high_level_flow.png}
-        \caption[llama.cpp: Token generation]{High-level flow of token generation in llama.cpp. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
-        \label{fig:llamaCppHighLevelFlow}
-    \end{wide}
+    \centering
+    \captionsetup{width=\linewidth}
+    \includegraphics[width=0.9\linewidth]{llama_cpp_high_level_flow.png}
+    \caption[llama.cpp: Token generation]{High-level flow of token generation in llama.cpp. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
+    \label{fig:llamaCppHighLevelFlow}
 \end{figure}
 
 Fundamentally, \glspl{LLM} iteratively complete any text they are given as input~\cite{mallisUnderstandingHowLLM2023}. We call this input a prompt. The generated completion is returned as output. We call this output the response. In \cref{fig:llamaCppHighLevelFlow}, the prompt is "Quantum mechanics is a fundamental theory of physics that" and the response after one iteration is "provides"~\cite{mallisUnderstandingHowLLM2023}. The following paragraphs will explain what happens that iteration.
