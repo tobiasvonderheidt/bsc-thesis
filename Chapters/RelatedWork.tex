@@ -16,13 +16,11 @@ As we implement an Android app to perform steganography in chat messages locally
 Spammimic is a demonstration of text-based steganography without \glspl{LLM} from as early as 2001~\cite{spammimicSpammimic2000}. Secret messages are encoded into cover texts that look like spam e-mails. \cref{fig:spammimicSpamEmail} shows an example. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
 
 \begin{figure}
-    \begin{wide}
-        \centering
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=0.5\linewidth]{spammimic_spam_email.png}
-        \caption[Spammimic]{Steganography in spam e-mails with Spammimic~\cite{spammimicSpammimic2000}. Only the secret message "hello world" was user input.}
-        \label{fig:spammimicSpamEmail}
-    \end{wide}
+	\centering
+	\captionsetup{width=\linewidth}
+	\includegraphics[width=0.5\linewidth]{spammimic_spam_email.png}
+	\caption[Spammimic]{Steganography in spam e-mails with Spammimic~\cite{spammimicSpammimic2000}. Only the secret message "hello world" was user input.}
+	\label{fig:spammimicSpamEmail}
 \end{figure}
 
 This approach already fulfills some of the requirements we set ourselves in \cref{ch:introduction}. It generates plausible cover texts for a given topic with minimal computing resources. The topic can be chosen by exchanging the grammar~\cite{spammimicSpammimic2000}. Generating spam e-mails is particularly beneficial as it lowers an attacker's expectation of cover text quality. It allows us to hide our communication amongst other e-mail traffic, obfuscating when a secret communication is happening. We may even send our cover texts to any number of recipients that includes the intended one, to obfuscate who is communicating with whom. Both would increase an attacker's costs significantly~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}.
@@ -54,26 +52,24 @@ However, this approach conflicts with most of the requirements we set ourselves 
 Many modern frameworks exist to give us low-level access to \glspl{LLM}. As demonstrated in the Stegasuras project with PyTorch and GPT-2~\cite{zieglerNeuralLinguisticSteganography2019,zieglerHarvardnlpNeuralSteganography2025,zieglerStegasuras2025}, this can be leveraged to perform steganography. First, we convert a secret message from string to binary. Then, we encode it into a cover text by letting the \gls{LLM} sample tokens to complete a given context based on the secret message bits. \cref{fig:stegasuras} shows an example. Stegasuras implements UTF-8 conversion and Arithmetic compression for the first step and Arithmetic, Huffman and Bins coding for the second step.
 
 \begin{figure}
-	\begin{wide}
-		\captionsetup{width=\linewidth}
+	\captionsetup{width=\linewidth}
 
-		\begin{subfigure}{\linewidth}
-			\centering
-			\includegraphics[width=0.75\linewidth]{stegasuras_a.png}
-			\caption{Inputs: A context to be completed and the secret message to be encoded.}
-			\label{fig:stegasurasA}
-		\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=0.75\linewidth]{stegasuras_a.png}
+		\caption{Inputs: A context to be completed and the secret message to be encoded.}
+		\label{fig:stegasurasA}
+	\end{subfigure}
 
-		\begin{subfigure}{\linewidth}
-			\centering
-			\includegraphics[width=0.75\linewidth]{stegasuras_b.png}
-			\caption{Output: A cover text that completes the context while encoding the secret message.}
-			\label{fig:stegasurasB}
-		\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=0.75\linewidth]{stegasuras_b.png}
+		\caption{Output: A cover text that completes the context while encoding the secret message.}
+		\label{fig:stegasurasB}
+	\end{subfigure}
 
-		\caption[Stegasuras]{The web demo of Stegasuras~\cite{zieglerStegasuras2025}.}
-		\label{fig:stegasuras}
-	\end{wide}
+	\caption[Stegasuras]{The web demo of Stegasuras~\cite{zieglerStegasuras2025}.}
+	\label{fig:stegasuras}
 \end{figure}
 
 This approach is promising several strengths we haven't seen before. By gaining low-level access to the \gls{LLM}, we can implement a complex encoding logic. This increases encoding efficiency to multiple bits per token and allows us to use small \glspl{LLM} that are feasible to run locally on a smartphone.

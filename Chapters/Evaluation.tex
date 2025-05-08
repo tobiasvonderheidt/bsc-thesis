@@ -101,13 +101,11 @@ We presented participants of our survey with screenshots of six chat conversatio
 Our survey delivered valuable insights in how to increase cover text quality further. \cref{fig:likertplots} shows an overview of the results. Most of the 31 participants rated the real conversations as more similar to their own chats than the cover texts. Cover texts were rated the most dissimilar in the use of emojis. This is explained in the comments ten participants gave: The \gls{LLM} tends to use emojis rather mechanically. For example, "I'm running late" may be followed by a clock emoji. Instead of enriching cover texts with non-verbal communication by expressing emotions, this only reiterates what is already being said.
 
 \begin{figure}
-    \begin{wide}
-        \centering
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=\linewidth]{likertplots.png}
-        \caption[Survey: Results]{Survey results. Similarity ratings on the Likert scales are aggregated for cover texts from Arithmetic coding, cover texts from Huffman coding, and real messages, respectively. Created using~\cite{maurerLikertplotcomPlotLikert2013}.}
-        \label{fig:likertplots}
-    \end{wide}
+	\centering
+	\captionsetup{width=\linewidth}
+	\includegraphics[width=0.95\linewidth]{likertplots.png}
+	\caption[Survey: Results]{Survey results. Similarity ratings on the Likert scales are aggregated for cover texts from Arithmetic coding, cover texts from Huffman coding, and real messages, respectively. Created using~\cite{maurerLikertplotcomPlotLikert2013}.}
+	\label{fig:likertplots}
 \end{figure}
 
 Higher similarity was achieved in the use of grammar/spelling and abbreviations. Participants expressed various personal preferences regarding the use of specific emojis and abbreviations. Furthermore, four participants commented that they don't include interjections or sounds (e.g. "oh", "ugh") in their messages, which the \gls{LLM} tends to do. Training a \gls{LLM} on one's own chat messages as demonstrated in~\cite{donnerSimulationMeFinetuning2024} may therefore be promising. Message length was rated the most similar. This implies that users of our app would have to restrict themselves to secret messages of around five words to generate plausible cover texts.
