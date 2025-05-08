@@ -271,13 +271,11 @@ Now we are ready to perform steganography via Huffman coding. We encode the bits
 Consider the tokens with the top $ 2^{bitsPerToken} $ probabilities. We construct a Huffman tree from them and generate the Huffman codes. Huffman codes of leaf nodes now all have the same length: \lstinline|bitsPerToken| bits, the height of the Huffman tree. We traverse the Huffman tree based on the secret message bits. If there are not enough bits left at the end, we go in one direction until we reach a leaf node\footnote{Any leaf node of the sub-tree reached after the last bit would be fine. The additional turns create artefacts similar to greedy sampling, but those are cleaned up in decoding (see \cref{sec:finishingTheLastSentence}).}. By sampling the token stored in the leaf node we arrive at after taking \lstinline|bitsPerToken| turns, we encode this number of bits. \cref{fig:huffmanCoding} shows an example Huffman tree for \lstinline|bitsPerToken| = 2 bits/token.
 
 \begin{figure}
-    \begin{wide}
-        \centering
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=0.67\linewidth]{huffman_coding.png}
-		\caption[Huffman coding]{Example of a Huffman tree for \lstinline|bitsPerToken| = 2. Nodes are labelled with tokens and their probabilities, edges with the bits they are interpreted as during traversal. Highlighted is the path that would be taken when encoding the bits 01 of a secret message. The token "provides" would be sampled.}
-        \label{fig:huffmanCoding}
-    \end{wide}
+    \centering
+    \captionsetup{width=\linewidth}
+    \includegraphics[width=0.67\linewidth]{huffman_coding.png}
+    \caption[Huffman coding]{Example of a Huffman tree for \lstinline|bitsPerToken| = 2. Nodes are labelled with tokens and their probabilities, edges with the bits they are interpreted as during traversal. Highlighted is the path that would be taken when encoding the bits 01 of a secret message. The token "provides" would be sampled.}
+    \label{fig:huffmanCoding}
 \end{figure}
 
 The last paragraph shows the simplicity of Huffman coding. We only need one parameter to control the trade-off between length and quality of cover texts. A low \lstinline|bitsPerToken| value (e.g. 1 bit/token) will only consider few most likely tokens, making the Huffman tree shallow. Cover texts will be long, but coherent. The inverse is true for a high \lstinline|bitsPerToken| value (e.g. 4 bits/token). However, Huffman coding also comes with a downside. It aims to maximize cover text quality at maximum compression~\cite{zieglerNeuralLinguisticSteganography2019}. This may be good enough to fool human eavesdroppers, but it is not sufficient to defend against machine-based attacks, as these can identify statistical patterns in cover texts~\cite{zieglerNeuralLinguisticSteganography2019}.
