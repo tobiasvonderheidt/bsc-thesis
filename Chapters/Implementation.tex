@@ -46,24 +46,21 @@ The functionality of Stegasuras is replicated by toggling the conversation switc
 \cref{fig:conversationScreen} shows the conversation screen. This is a demonstration of how steganography could be integrated into an instant messenger. This screen displays a list of messages, an input field and a send button. The messages are arranged as a chat conversation between two people and coloured accordingly. The input field allows the user to type in a new message, which can then be sent into the chat by pressing the send button. As this is a demo, messages are not being sent over the internet, but only stored locally. Effectively, users chat with themselves by constantly switching roles.
 
 \begin{figure}
-	\begin{wide}
-		\captionsetup{width=\linewidth}
-		\begin{subfigure}{0.45\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{hips_conversation_screen_a.png}
-			\caption{A conversation of cover texts.}
-			\label{fig:conversationScreenA}
-		\end{subfigure}
-        \hfill
-		\begin{subfigure}{0.45\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{hips_conversation_screen_b.png}
-			\caption{Showing a secret message.}
-			\label{fig:conversationScreenB}
-		\end{subfigure}
-		\caption[HiPS: Conversation screen]{Steganography on the conversation screen.}
-		\label{fig:conversationScreen}
-	\end{wide}
+    \captionsetup{width=\linewidth}
+    \centering
+    \begin{subfigure}{0.3\linewidth}
+        \includegraphics[width=\linewidth]{hips_conversation_screen_a.png}
+        \caption{A conversation of cover texts.}
+        \label{fig:conversationScreenA}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}{0.3\linewidth}
+        \includegraphics[width=\linewidth]{hips_conversation_screen_b.png}
+        \caption{Showing a secret message.}
+        \label{fig:conversationScreenB}
+    \end{subfigure}
+    \caption[HiPS: Conversation screen]{Steganography on the conversation screen.}
+    \label{fig:conversationScreen}
 \end{figure}
 
 When the input field is blank, the send button can be short-pressed to switch roles. The current role is indicated by the send button being the same colour as the corresponding messages. This allows for sending multiple consecutive messages from the same role, i.e. for roles to not be strictly alternating. The role also switches automatically after sending a message.
