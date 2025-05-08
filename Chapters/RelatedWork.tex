@@ -45,7 +45,7 @@ With state-of-the-art \glspl{LLM} reaching hundreds of billions of parameters, t
 
 This approach is attractive because it doesn't require a low-level understanding of \glspl{LLM} to implement it. The topic of cover texts can be controlled via the words in sets A and B, which in turn can be generated via a prompt. Encoding efficiency can be controlled via the number of word sets to choose from. It may also be relatively efficient with computing resources, as the \gls{LLM} is only needed for encoding, not for decoding.
 
-However, this approach conflicts with most of the requirements we set ourselves in \cref{ch:introduction}. As can quickly be tested with tools like LM Studio, small \glspl{LLM} that are feasible to run locally on a smartphone are not able to perform the encoding logic. We would have to rely on a service provider to host a large \gls{LLM} for us. Making core functionality of our app dependent on third parties increases attack surface significantly (see \cref{sec:largeLanguageModels}). Therefore, the simplicity of this approach is not worth it for us.
+However, this approach conflicts with most of the requirements we set ourselves in \cref{ch:introduction}. As can easily be tested with tools like LM Studio, small \glspl{LLM} that are feasible to run locally on smartphones are not able to perform the encoding logic. We would have to rely on a service provider to host a large \gls{LLM} for us. Making core functionality of our app dependent on third parties increases attack surface significantly. Therefore, the simplicity of this approach is not worth it for us.
 
 \subsection{Low-level: Manipulating token generation}
 \label{sec:lowLevelManipulatingTokenGeneration}
