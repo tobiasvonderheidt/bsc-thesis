@@ -132,26 +132,24 @@ With this knowledge, we created a selection of \glspl{LLM} that can hold a belie
 We then gave the second instance a prompt that instructed it on how to respond to the first instance. While we kept the structure of this prompt the same as detailed above, we tried variations in both role and tone. Roles may either be similar (e.g. two friends, two colleagues) or opposite (e.g. parent and child, employee and customer). The same goes for the tone. \cref{fig:lmStudioB} shows examples of both prompt and response for similar role and tone.
 
 \begin{figure}
-	\begin{wide}
-		\captionsetup{width=\linewidth}
+	\captionsetup{width=\linewidth}
 
-		\begin{subfigure}{\linewidth}
-			\centering
-			\includegraphics[width=0.75\linewidth]{lm_studio_a.png}
-			\caption{The first instance of the \gls{LLM} being instructed on how to start a conversation.}
-			\label{fig:lmStudioA}
-		\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=0.75\linewidth]{lm_studio_a.png}
+		\caption{The first instance of the \gls{LLM} being instructed on how to start a conversation.}
+		\label{fig:lmStudioA}
+	\end{subfigure}
 
-		\begin{subfigure}{\linewidth}
-			\centering
-			\includegraphics[width=0.75\linewidth]{lm_studio_b.png}
-			\caption{The second instance of the \gls{LLM} being instructed on how to respond to the first instance.}
-			\label{fig:lmStudioB}
-		\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=0.75\linewidth]{lm_studio_b.png}
+		\caption{The second instance of the \gls{LLM} being instructed on how to respond to the first instance.}
+		\label{fig:lmStudioB}
+	\end{subfigure}
 
-		\caption[LM Studio]{Use of LM Studio for \gls{LLM} selection.}
-		\label{fig:lmStudio}
-	\end{wide}
+	\caption[LM Studio]{Use of LM Studio for \gls{LLM} selection.}
+	\label{fig:lmStudio}
 \end{figure}
 
 From then on, the two instances could talk to each other by copy-pasting their responses back and forth. \cref{tab:largeLanguageModels} shows a selection of popular \glspl{LLM} that we tested using this method. As discussed above, we focus on \glspl{LLM} with around 1 GiB in file size to target entry-level smartphones. On flagship devices, we would choose \glspl{LLM} with higher parameter count or higher number of bits in quantization.
