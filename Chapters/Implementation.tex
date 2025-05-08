@@ -285,12 +285,11 @@ The last paragraph shows the simplicity of Huffman coding. We only need one para
 To encode the secret message into a cover text, we implement Arithmetic coding. Arithmetic coding is based on a compression algorithm where data is represented as a decimal number in the $ [0, 1) $ interval. This is achieved by iteratively narrowing the boundaries: In every iteration, a sub-interval is selected based on a part of the data and divided into further sub-intervals~\cite{rissanenArithmeticCoding1979}. \cref{fig:arithmeticCoding} provides a visualization. Arithmetic coding is popular because of its ability to compress data to near entropy~\cite{rissanenArithmeticCoding1979}. Stegasuras implements a variant of this using wider integer intervals that don't strictly narrow down to perform steganography~\cite{zieglerNeuralLinguisticSteganography2019,rubinArithmeticStreamCoding1979}.
 
 \begin{figure}
-    \begin{wide}
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=0.75\linewidth]{arithmetic_coding.png}
-		\caption[Arithmetic coding]{A visualization of Arithmetic coding. The secret message $m$ gets encoded into a cover text $y$ via a transformation $f$. Iterations are arranged as layers of a circle. The sub-intervals of $ [0, 1) $ get narrower the further they are away from the center. Taken from~\cite{zieglerNeuralLinguisticSteganography2019}.}
-        \label{fig:arithmeticCoding}
-    \end{wide}
+    \centering
+    \captionsetup{width=\linewidth}
+    \includegraphics[width=0.67\linewidth]{arithmetic_coding.png}
+    \caption[Arithmetic coding]{A visualization of Arithmetic coding. The secret message $m$ gets encoded into a cover text $y$ via a transformation $f$. Iterations are arranged as layers of a circle. The sub-intervals of $ [0, 1) $ get narrower the further they are away from the center. Taken from~\cite{zieglerNeuralLinguisticSteganography2019}.}
+    \label{fig:arithmeticCoding}
 \end{figure}
 
 Arithmetic coding encodes the bits of a secret message into a cover text by sampling specific tokens. This uses the probabilities calculated by the \gls{LLM} and three parameters as input: \lstinline|temperature|, \lstinline|topK| and \lstinline|precision|. The former is a decimal number, the latter two are integers. \lstinline|topK| is a number of tokens not greater than $ n_{vocab} $, the vocabulary size of the \gls{LLM}. \lstinline|precision| is a number of bits. The output is the sampled cover text token.
