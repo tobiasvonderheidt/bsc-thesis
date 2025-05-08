@@ -153,22 +153,21 @@ We then gave the second instance a prompt that instructed it on how to respond t
 From then on, the two instances could talk to each other by copy-pasting their responses back and forth. \cref{tab:largeLanguageModels} shows a selection of popular \glspl{LLM} that we tested using this method. As discussed above, we focus on \glspl{LLM} with around 1 GiB in file size to target entry-level smartphones. On flagship devices, we would choose \glspl{LLM} with higher parameter count or higher number of bits in quantization.
 
 % Windows displays file sizes in MiB, Android in MB
-% Declare acronym LLM in caption as it is used in column header
 \begin{table}
 	\centering
-	\begin{tabular}{@{} lrllrl @{}} % @{} removes white spaces
+	\begin{tabular}{@{} l p{3cm} p{3cm} r r @{}} % @{} removes white spaces
 		\toprule
-		\tableheadline{LLM} & \tableheadline{Parameters} & \tableheadline{Fine-tuning} & \tableheadline{Quantization} & \tableheadline{File size} & \tableheadline{Source} \\
+		\tableheadline{LLM} & \tableheadline{Fine-tuning} & \tableheadline{Quantization} & \tableheadline{File size} & \tableheadline{Source} \\
 		\midrule
-		Llama 3.2   &   1B & Instruct & Q4 &   770 MiB & \cite{huggingquantsHuggingquantsLlama321BInstructQ4_K_MGGUFHugging2024} \\
-        Gemma 3     &   1B & Instruct & Q4 &   768 MiB & \cite{lmstudiocommunityLmstudiocommunityGemma31bItGGUF2025} \\
-		Qwen 2      & 1.5B & Instruct & Q4 &   940 MiB & \cite{qwenQwenQwen215BInstructGGUFHugging2024} \\
-		SmolLM 2    & 1.7B & Instruct & Q4 & 1,007 MiB & \cite{huggingfacesmolmodelsresearchHuggingFaceTBSmolLM217BInstructGGUFHugging2024} \\
-        DeepSeek R1 & 1.5B &      n/a & Q4 & 1,066 MiB & \cite{lmstudiocommunityLmstudiocommunityDeepSeekR1DistillQwen15BGGUFHugging2025} \\
+		Llama 3.2 1B     & Instruct & Q4 &   770 MiB & \cite{huggingquantsHuggingquantsLlama321BInstructQ4_K_MGGUFHugging2024} \\
+        Gemma 3 1B       & Instruct & Q4 &   768 MiB & \cite{lmstudiocommunityLmstudiocommunityGemma31bItGGUF2025} \\
+		Qwen 2 1.5B      & Instruct & Q4 &   940 MiB & \cite{qwenQwenQwen215BInstructGGUFHugging2024} \\
+		SmolLM 2 1.7B    & Instruct & Q4 & 1,007 MiB & \cite{huggingfacesmolmodelsresearchHuggingFaceTBSmolLM217BInstructGGUFHugging2024} \\
+        DeepSeek R1 1.5B &      n/a & Q4 & 1,066 MiB & \cite{lmstudiocommunityLmstudiocommunityDeepSeekR1DistillQwen15BGGUFHugging2025} \\
 		\bottomrule
 	\end{tabular}
 	% Use alternative short title for table of contents
-	\caption[Large language models]{The \glspl{LLM} that we considered.}
+	\caption[Large language models]{The \glspl{LLM} we considered. Note that DeepSeek R1 1.5B doesn't specify a fine-tuning.}
 	\label{tab:largeLanguageModels}
 \end{table}
 
