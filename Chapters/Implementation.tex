@@ -202,12 +202,11 @@ To complete the prompt, the \gls{LLM} needs to predict which tokens are likely t
 With the prompt effectively converted into a matrix representation, the \gls{LLM} can now apply \textit{transformations} to it, i.e. multiply it with a series of matrices. \cref{fig:llamaCppHighLevelFlow} depicts this as "Transformer layers with self-attention". This is the core of the \textit{Transformer} architecture, which is the basis for most \glspl{LLM} today~\cite{vaswaniAttentionAllYou2023}. Different variants of the Transformer architecture exist, namely encoder-decoder or decoder-only~\cite{mallisUnderstandingHowLLM2023}. They each come with their own strengths and weaknesses, the discussion of which is out of scope for this thesis. For us, it is only relevant that we want to support as many \glspl{LLM} as possible. This means we have to check if an encoding step is required before performing the decoding step. Fortunately, llama.cpp abstracts this away behind a simple function call each~\cite{gerganovGgerganovLlamacpp2024}. This was shown earlier in Listing~\ref{lst:llamaCpp}. The result of these transformations is a matrix of logits, i.e. of unnormalized probabilities for the prediction of the next token~\cite{mallisUnderstandingHowLLM2023}. \cref{fig:llamaCppLogits} shows the logits matrix in detail. Its dimensions are \lstinline|n_tokens| $\times$ \lstinline|n_vocab|. \lstinline|n_vocab| is the vocabulary size specific to the \gls{LLM}, i.e. the number of tokens it knows~\cite{mallisUnderstandingHowLLM2023}.
 
 \begin{figure}
-    \begin{wide}
-        \captionsetup{width=\linewidth}
-        \includegraphics[width=\linewidth]{llama_cpp_logits.png}
-        \caption[llama.cpp: Logit matrix]{Details of the logit matrix in llama.cpp. Also shown is the last transformation layer, i.e. the last intermediate matrix being multiplied with a fixed "output" matrix. This is not to be confused with the output of the \gls{LLM} as defined earlier. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
-        \label{fig:llamaCppLogits}
-    \end{wide}
+    \centering
+    \captionsetup{width=\linewidth}
+    \includegraphics[width=0.9\linewidth]{llama_cpp_logits.png}
+    \caption[llama.cpp: Logit matrix]{Details of the logit matrix in llama.cpp. Also shown is the last transformation layer, i.e. the last intermediate matrix being multiplied with a fixed "output" matrix. This is not to be confused with the output of the \gls{LLM} as defined earlier. Taken from~\cite{mallisUnderstandingHowLLM2023}.}
+    \label{fig:llamaCppLogits}
 \end{figure}
 
 Each row of the logit matrix corresponds to a token in the prompt. It contains the logits for every token in the vocabulary to follow this token of the prompt. In other words, only the last row of the logit matrix is relevant for us, as it contains the logits for the last token of the prompt~\cite{mallisUnderstandingHowLLM2023}. This is highlighted in \cref{fig:llamaCppLogits}. Generally, these logits will be normalized using a softmax function (see \cref{sec:theGenericAlgorithm} for details). Only then they are interpretable as probabilities~\cite{mallisUnderstandingHowLLM2023,turnerIntroductionTransformers2024}.
