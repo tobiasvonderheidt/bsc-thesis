@@ -49,7 +49,7 @@ However, our implementation shows a considerable performance deficit in comparis
 
 \subsection{Compression}
 \label{sec:compression}
-To fool eavesdroppers with our cover texts, they have to be of plausible length. Therefore, we want to maximize efficiency when compressing the secret message while converting it from string to binary. Unfortunately, our implementation introduces some overhead. To clean up artefacts from greedy sampling in decoding, we append an ASCII NUL character to the string secret message. To allow for encryption, we prepend some padding to the binary secret message. Therefore, we implement Arithmetic compression. But it is not without downsides.
+To fool eavesdroppers with our cover texts, they have to be of plausible length. Therefore, we want to maximize efficiency when compressing the secret message while converting it from string to binary. Unfortunately, our implementation introduces some overhead. To clean up noise from greedy sampling in decoding, we append an ASCII NUL character to the string secret message. To allow for encryption, we prepend some padding to the binary secret message. Therefore, we implement Arithmetic compression. But it is not without downsides.
 
 Arithmetic compression relies on the \gls{LLM} predicting the secret message token-wise. As the secret message is arbitrary user input, the \gls{LLM} may not be able to predict it. This would cause the Arithmetic compression to fail. To increase reliability, we would maximize the \lstinline|precision| parameter. But unfortunately, there is a trade-off with compression ratio.
 
