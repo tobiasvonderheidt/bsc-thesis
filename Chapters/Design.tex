@@ -7,8 +7,8 @@
 
 To implement steganography with local \glspl{LLM} on Android, we have to make some important design decisions. This encompasses the choice of \gls{LLM} and the framework to run it. To support these decisions, we revisit the Stegasuras project, which our app is based on.
 
-\section{Overview}
-\label{sec:overview}
+\section{Overview of requirements and architecture}
+\label{sec:overviewOfRequirementsAndArchitecture}
 Our work is based on the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, which demonstrates how to perform steganography by manipulating token generation of a \gls{LLM}. Fundamentally, it works as follows: First, we convert a secret message from string to binary. Then, we encode it into a cover text by letting the \gls{LLM} sample tokens to complete a given context based on the secret message bits. Stegasuras has a modular architecture, as it implements multiple algorithms for each of the two steps. This approach is promising for fulfilling the requirements we set ourselves in \cref{ch:introduction}:
 \begin{enumerate}
     \item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
