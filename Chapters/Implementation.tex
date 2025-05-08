@@ -78,24 +78,21 @@ The delete button can only be pressed if the selected messages are at the end of
 \cref{fig:settingsScreen} shows the settings screen. This is where the \gls{LLM} is managed and where all parameters of our algorithms can be modified. Upon installation of our app, the user needs to download the \gls{LLM} by pressing the download button at the top of this screen. Then the \gls{LLM} can be loaded into or unloaded from memory by pressing the start/stop button below the download button. Pressing this button is only necessary after downloading the \gls{LLM} when using our app for the first time. Afterwards, the \gls{LLM} is automatically loaded on startup.
 
 \begin{figure}
-	\begin{wide}
-		\captionsetup{width=\linewidth}
-		\begin{subfigure}{0.45\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{hips_settings_screen_a.png}
-			\caption{Download button, start button, binary conversion mode, and system prompt.}
-			\label{fig:settingsScreenA}
-		\end{subfigure}
-        \hfill
-        \begin{subfigure}{0.45\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{hips_settings_screen_b.png}
-			\caption{Context length, steganography mode, parameters for Huffman coding, and reset options.}
-			\label{fig:settingsScreenB}
-		\end{subfigure}
-		\caption[HiPS: Settings screen]{The settings screen.}
-		\label{fig:settingsScreen}
-	\end{wide}
+    \captionsetup{width=\linewidth}
+    \centering
+    \begin{subfigure}{0.3\linewidth}
+        \includegraphics[width=\linewidth]{hips_settings_screen_a.png}
+        \caption{Download button, start button, binary conversion mode, and system prompt.}
+        \label{fig:settingsScreenA}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}{0.3\linewidth}
+        \includegraphics[width=\linewidth]{hips_settings_screen_b.png}
+        \caption{Context length, steganography mode, algorithm parameters, and reset button.}
+        \label{fig:settingsScreenB}
+    \end{subfigure}
+    \caption[HiPS: Settings screen]{The settings screen.}
+    \label{fig:settingsScreen}
 \end{figure}
 
 Below these buttons, there are various selectors, sliders and input fields for the parameters of our algorithms. They are arranged in the order of corresponding steps during the encoding of a secret message. First there is a selector for the conversion mode, i.e. for how to convert the secret message from string to binary. It offers \lstinline|Arithmetic (recommended)| and \lstinline|UTF-8| as options. \lstinline|UTF-8| serves as a baseline as it doesn't compress the secret message, while \lstinline|Arithmetic| compresses it using the \gls{LLM}.
