@@ -119,18 +119,12 @@ object LlamaCpp {
     @Volatile
     private var model = 0L
 
-    fun isInMemory(): Boolean {
-        return model != 0L
-    }
+    fun isInMemory(): Boolean { return model != 0L }
 
     fun startInstance() {
-        if (isInMemory()) {
-            return
-        }
-
-        synchronized(lock = this) {
-            if (!isInMemory()) {
-                model = loadModel()
+        if (!isInMemory()) {
+            synchronized(lock = this) {
+                if (!isInMemory()) { model = loadModel() }
             }
         }
     }
