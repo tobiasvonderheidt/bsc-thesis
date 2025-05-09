@@ -11,9 +11,9 @@
 \chapterExtra{Abstract}
 While you read this sentence, around one million WhatsApp messages are being sent. We share the details of our personal lives in them, from our highest hopes to our deepest fears. This is only possible because we assume them to be private.
 
-To protect user privacy, we implement an Android app called \gls{HiPS}. It creates a layer of protection currently missing from popular instant messengers: Steganography. We run \glspl{LLM} locally on smartphones to encode secret messages into unsuspicious cover texts. Our work is based on the Stegasuras project. By porting it to llama.cpp, we are able to swap \glspl{LLM} to scale with available hardware. We create chat conversations between cover texts, fine-tune their quality via a system prompt and plain text messages, and enrich them with emojis.
+To protect user privacy, we implement an Android app called \gls{HiPS}. It creates a layer of protection currently missing from popular instant messengers: Steganography. We run \glspl{LLM} locally on the smartphone to encode secret messages into unsuspicious cover texts. Our work is based on the Stegasuras project. We extend its functionality in multiple ways: By porting it to llama.cpp, we are able to swap \glspl{LLM} to scale with available hardware. We create chat conversations of arbitrarily interleaved cover texts and plain texts, expose a system prompt for easy low-level access to the \gls{LLM} via natural language, and enrich cover texts with emojis to make them more organic.
 
-We conduct a survey amongst students of TU Darmstadt to compare our cover texts to real chat conversations. This delivers valuable insights in how to fine-tune cover text quality for this highly relevant demographic of users.
+To compare our cover texts to real chat messages, we conduct a survey amongst students of TU Darmstadt. This delivers valuable insights in how to fine-tune cover text quality for this highly relevant demographic of users.
 
 \vfill
 
