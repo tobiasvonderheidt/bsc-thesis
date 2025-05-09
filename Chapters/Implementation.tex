@@ -237,7 +237,7 @@ We propose a solution to clean up this noise during decoding: We inject a suitab
 
 As the secret message may get encrypted between binary conversion and cover text generation, we cannot make any structural assumptions about the bits being \textit{decoded} from a cover text. Therefore we have to insert our stop signal earlier in the encoding process, so that we can identify it later in the decoding process.
 
-This ultimately led us to consider a special character as a stop signal. We append this special character to the secret message before it gets converted from string to binary. A suitable special character needs to be unlikely as organic user input, so that blocking it doesn't degrade the user experience significantly. The ASCII NUL character presents such a solution. While languages such as C and C++ use it for string termination, it doesn't serve any purpose in Kotlin. As it doesn't have a visual representation, it is not on any standard keyboard. This enables us to clean up any noise in decoding with minimal overhead.
+This ultimately led us to consider a special character as stop signal. We append this special character to the secret message before it gets converted from string to binary. A suitable special character needs to be unlikely as organic user input, so that blocking it doesn't degrade the user experience significantly. Fortunately, the ASCII NUL character presents a solution. While languages such as C and C++ use it for string termination, it doesn't serve any purpose in Kotlin. As it doesn't have a visual representation, it is not on standard keyboards. This enables us to clean up any noise in decoding with minimal overhead.
 
 \subsection{UTF-8}
 \label{sec:utf8}
