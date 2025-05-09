@@ -45,7 +45,7 @@ To appeal to a large user base, we set ourselves the requirement of acceptable p
 	\label{tab:performance}
 \end{table}
 
-However, our implementation shows a considerable performance deficit in comparison to other apps running \glspl{LLM} with llama.cpp: In \cref{sec:howToRunLLMsOnAndroid}, we found that we can achieve around 5 tokens/second on the same smartphones. Overhead is similar on our flagship device, which achieved up to 4 tokens/second with our app, but up to 25 tokens/second with the other apps. This is likely because the other implementations we investigated perform token sampling in C++ rather than Kotlin. Therefore, they don't have to pass data through the \gls{JNI} for every token. We underestimated the impact of this design decision in the early phases of development due to lack of experience.
+However, our implementation shows a considerable performance deficit in comparison to other apps running \glspl{LLM} with llama.cpp: In \cref{sec:howToRunLLMsOnAndroid}, we found that we can achieve around 5 tokens/second on the same smartphones. Overhead is similar on our flagship device, which achieved up to 4 tokens/second with our app, but up to 25 tokens/second with the other apps. This is likely because the other apps perform token sampling in C++ rather than Kotlin. Therefore, they don't have to pass data through the \gls{JNI} for every token. We underestimated the impact of this design decision in the early phases of development due to lack of experience.
 
 \subsection{Compression}
 \label{sec:compression}
