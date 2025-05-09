@@ -29,8 +29,8 @@ With the rise of political extremism in recent years, the risk of wars is presen
 
 To protect ourselves against these threats, we have to protect our communication. Steganography presents a promising solution. As it hides sensitive information in unsuspicious cover media, it can render our communication useless to attackers. Unfortunately, steganography is not commonly built into the tools we use for communication. By implementing an Android app to perform steganography in chat messages, we solve this problem for instant messengers.
 
-\subsection{Formalizing steganography}
-\label{sec:formalizingSteganography}
+\subsection{Formalization}
+\label{sec:formalization}
 To be able to implement steganography, we have to formalize it. We do this by defining all relevant terms related to it. First, steganography itself is often described as both the art and science of hiding information~\cite{bennettLinguisticSteganographySurvey2004,wuGenerativeTextSteganography2024}. It can come in many forms, limited only by our creativity. We focus on digital steganography, i.e. on hiding data in other data. More specifically, we implement text-based or linguistic steganography, i.e. we work with natural language text~\cite{zieglerNeuralLinguisticSteganography2019}.
 
 There are many reasons why one would want to communicate privately. All of them can be described by a common denominator: We have two parties, Alice and Bob. They communicate with each other by sending messages. A message is the data transmitted between them~\cite{wuGenerativeTextSteganography2024}. There also is Eve, an attacker who wants to compromise this communication~\cite{al-aniOverviewMainFundamentals2010,wuGenerativeTextSteganography2024}.
