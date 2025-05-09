@@ -223,7 +223,7 @@ To \textbf{encode} the bits of a secret message into a cover text using a contex
 	\label{eqn:softmax}
 \end{align}
 
-To avoid early termination, we manually suppress end-of-generation tokens by setting their probability to zero. Otherwise, we may render our secret message unrecoverable by not encoding all of its bits.
+To avoid early termination, we manually suppress end-of-generation tokens by setting their probabilities to zero. Otherwise, we may render our secret message unrecoverable by not encoding all of its bits.
 
 If there are secret message bits left to encode, the implementation-specific sampling logic is applied (see \cref{sec:arithmeticCoding,sec:huffmanCoding} for details). It samples the next cover text token based on the secret message bits and the probabilities we just calculated. Otherwise, greedy sampling is applied to finish the last sentence of the cover text. After the last iteration, the sampled cover text tokens are detokenized to return the cover text.
 
