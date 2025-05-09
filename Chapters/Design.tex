@@ -58,7 +58,7 @@ With this insight, we investigated llama.cpp further. It became apparent that it
 \vspace{0.25cm}
 
 % Put listings above last paragraph to avoid page break
-\begin{lstlisting}[caption={[PyTorch]{Snippet of the Stegasuras code needed to get logits from a \gls{LLM} using PyTorch~\cite{zieglerHarvardnlpNeuralSteganography2025}. Tensor operations are exposed whenever indices of an object are queried.}}, label={lst:pyTorch}]
+\begin{lstlisting}[caption={[PyTorch: Calculating logits]{Snippet of the Stegasuras code needed to get logits from a \gls{LLM} using PyTorch~\cite{zieglerHarvardnlpNeuralSteganography2025}. Tensor operations are exposed whenever indices of an object are queried.}}, label={lst:pyTorch}]
 logits, past = model(prev.unsqueeze(0), past=past)
 
 past = limit_past(past)
@@ -66,7 +66,7 @@ past = limit_past(past)
 logits, indices = logits[0, -1, :].sort(descending=True)
 \end{lstlisting}
 
-\begin{lstlisting}[caption={[llama.cpp]{Snippet of our code needed to get logits from a \gls{LLM} using llama.cpp. No tensor operations are exposed.}}, label={lst:llamaCpp}]
+\begin{lstlisting}[caption={[llama.cpp: Calculating logits]{Snippet of our code needed to get logits from a \gls{LLM} using llama.cpp. No tensor operations are exposed.}}, label={lst:llamaCpp}]
 if (llama_model_has_encoder(model)) { llama_encode(ctx, batch); }
 
 llama_decode(ctx, batch);
