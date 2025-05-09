@@ -8,6 +8,7 @@
 \let\cleardoublepage\relax
 \let\cleardoublepage\relax
 
+% TODO Double-check advice from https://www.easterbrook.ca/steve/2010/01/how-to-write-a-scientific-abstract-in-six-easy-steps/
 \chapterExtra{Abstract}
 While you read this sentence, around one million WhatsApp messages are being sent. We share the details of our personal lives in them, from our highest hopes to our deepest fears. This is only possible because we assume them to be private.
 
@@ -21,9 +22,9 @@ To compare our cover texts to real chat messages, we conduct a survey amongst st
 \chapterExtra{Zusammenfassung}
 Während Sie diesen Satz lesen, werden etwa eine Million WhatsApp-Nachrichten verschickt. Wir teilen darin die Details unseres Privatlebens, von unseren größten Hoffnungen bis hin zu unseren tiefsten Ängsten. Das ist nur möglich weil wir glauben, dass sie auch privat bleiben.
 
-Um die Privatsphäre von Nutzern zu schützen, implementieren wir eine Android App namens \gls{HiPS}. Sie schafft eine Schutzschicht, die in populären Instant Messengern derzeit fehlt: Steganografie. Wir führen \glspl{LLM} lokal auf Smartphones aus, um geheime Botschaften in unauffällige Cover-Texte zu kodieren. Unsere Arbeit basiert auf dem Stegasuras-Projekt. Durch die Portierung zu llama.cpp sind wir in der Lage, \glspl{LLM} auszutauschen um mit der verfügbaren Hardware zu skalieren. Wir erzeugen Chat-Konversationen zwischen Cover-Texten, steuern ihre Qualität über einen System Prompt und Klartext-Nachrichten, und verfeinern sie mit Emojis.
+Um die Privatsphäre von Nutzern zu schützen, implementieren wir eine Android App namens \gls{HiPS}. Sie schafft eine Schutzschicht, die in populären Instant Messengern derzeit fehlt: Steganografie. Wir führen \glspl{LLM} lokal auf dem Smartphone aus, um geheime Botschaften in unauffällige Cover-Texte zu kodieren. Unsere Arbeit basiert auf dem Stegasuras-Projekt. Wir erweitern dessen Funktionalität auf mehrere Arten: Durch die Portierung zu llama.cpp sind wir in der Lage, \glspl{LLM} auszutauschen um mit der verfügbaren Hardware zu skalieren. Wir erzeugen Chat-Konversationen zwischen beliebig verschachtelten Cover-Texten und Klartexten, legen einen System Prompt offen für einfachen tiefgreifenden Zugriff auf das \gls{LLM} per natürlicher Sprache, und verfeinern unsere Cover-Texte mit Emojis um sie möglichst organisch wirken zu lassen.
 
-Schließlich führen wir eine Umfrage unter Studenten der TU Darmstadt durch, um unsere Cover-Texte mit echten Chat-Konversationen zu vergleichen. Dies liefert uns wertvolle Einblicke darin, wie wir die Qualität von Cover-Texten auf diese besonders relevante Nutzergruppe zuschneiden können.
+Um unsere Cover-Texte mit echten Chat-Konversationen zu vergleichen, führen wir eine Umfrage unter Studenten der TU Darmstadt durch. Dies liefert uns wertvolle Einblicke darin, wie wir die Qualität von Cover-Texten auf diese besonders relevante Nutzergruppe zuschneiden können.
 \end{otherlanguage}
 
 \endgroup
