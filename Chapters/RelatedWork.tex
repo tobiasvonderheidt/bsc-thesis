@@ -13,14 +13,14 @@ As we implement an Android app to perform steganography in chat messages locally
 
 \subsection{Mimicking}
 \label{sec:mimicking}
-Spammimic is a demonstration of text-based steganography without \glspl{LLM} from as early as 2001~\cite{spammimicSpammimic2000}. Secret messages are encoded into cover texts that look like spam e-mails. \cref{fig:spammimicSpamEmail} shows an example. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
+Spammimic is a demonstration of text-based steganography without \glspl{LLM} from as early as 2001~\cite{spammimicSpammimic2000}. Secret messages are encoded into cover texts that look like spam e-mails. \cref{fig:spammimic} shows an example. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
 
 \begin{figure}
 	\centering
 	\captionsetup{width=\linewidth}
-	\includegraphics[width=0.5\linewidth]{spammimic_spam_email.png}
+	\includegraphics[width=0.5\linewidth]{spammimic.png}
 	\caption[Spammimic]{Steganography in spam e-mails with Spammimic~\cite{spammimicSpammimic2000}. Only the secret message "hello world" was user input.}
-	\label{fig:spammimicSpamEmail}
+	\label{fig:spammimic}
 \end{figure}
 
 This approach already fulfills some of the requirements we set ourselves in \cref{ch:introduction}. It generates plausible cover texts for a given topic with minimal computing resources. The topic can be chosen by exchanging the grammar~\cite{spammimicSpammimic2000}. Generating spam e-mails is particularly beneficial as it lowers an attacker's expectation of cover text quality. It allows us to hide our communication amongst other e-mail traffic, obfuscating when a secret communication is happening. We may even send our cover texts to any number of recipients that includes the intended one, to obfuscate who is communicating with whom. Both would increase an attacker's costs significantly~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}.
@@ -77,35 +77,3 @@ This approach is promising several strengths we haven't seen before. By gaining 
 However, the Stegasuras implementation also has some shortcomings we can improve upon. Being published in 2019, it is not state-of-the-art anymore. We can expect significant gains in cover text quality by just swapping out the \gls{LLM}~\cite{wuGenerativeTextSteganography2024}. Furthermore, there is an open edge case. If cover text generation ends as soon as all secret message bits are encoded, the last sentence of the cover text likely isn't finished. Stegasuras offers a partial solution by finishing it with greedy sampling during encoding~\cite{zieglerHarvardnlpNeuralSteganography2025}. But this isn't considered during decoding, so the recovered secret message is followed by noise. Stegasuras ignores this in its evaluation by cutting off unfinished last sentences of cover texts~\cite{zieglerNeuralLinguisticSteganography2019}, thereby corrupting the secret message encoded in them.
 
 Solving this edge case is the first contribution we make. Beyond that, we port the implementation to the state-of-the-art llama.cpp framework~\cite{gerganovGgerganovLlamacpp2024}, which gives us access to a wide range of \glspl{LLM} to scale with available hardware. We implement an Android app to run all of this locally on a smartphone. We extend the functionality by creating chat conversations, allowing users to arbitrarily interleave cover texts and plain texts. We improve cover text quality by including emojis and exposing a system prompt, allowing users to influence \gls{LLM} behaviour on a lower level via a natural language command. This way, we are able to solve the real-world problem of protecting people's privacy against eavesdroppers with steganography.
-
-% \section{Further considerations}
-% \label{sec:furtherConsiderations}
-% In the previous sections of this chapter, we discussed several approaches for text-based steganography without \glspl{LLM}. In particular, we focussed on the extent to which each approach fulfilled our central requirement - creating a believable chat conversation from cover texts. In this section, we take a look at some more text-based steganography approaches, still without involving \glspl{LLM}. But the focus is now on some more refined requirements, stemming from more specific use cases. Lastly, we take a look at an example of what not to do.
-
-% \subsection{Localization}
-% \label{sec:localization}
-% The overall goal of our implementation can be stated as follows: Use text-based steganography in chat messages to protect against attackers. While multiple aspects of this definition can and will be refined over the course of this thesis, we now discuss one aspect that is largely omitted otherwise: Localization. Our standard assumption is that both users and attackers are English-speaking. This may be fine for academic purposes, but in practice a lot of the potential users of our implementation are in countries where English is not an official language. This is especially relevant for protection from political persecution under authoritarian regimes.
-
-% An example implementation of location-specific steganography is Nahoft~\cite{united4iranNahoft2021,united4iranU4iadminNahoft2025}. This is an Android app designed to protect people in Iran protesting against their government. It performs text-based steganography by creating cover texts consisting of random Persian words, the official language of Iran. If English was used in this situation, it would only attract unwanted attention from the authorities.
-
-% Characteristics specific to languages with non-Latin scripts can be leveraged for steganography. Examples for such languages are Arabic~\cite{shirali-shahrezaNewApproachPersian2006,hamzahLinguisticSteganographyFramework2021,thabitComparativeAnalysisArabic2021}, Chinese~\cite{luoTextSteganographyHigh2017} and Hindi~\cite{allaEvolutionHindiText2009}. The scripts of these languages provide a rich variety of symbols and variations, exceeding what the Latin script has to offer, allowing e.g. multiple equivalent shapes for the same expression~\cite{shirali-shahrezaNewApproachPersian2006,hamzahLinguisticSteganographyFramework2021,thabitComparativeAnalysisArabic2021}. Furthermore, relationships between languages should be considered. Steganography approaches leveraging language-specific characteristics can sometimes be transferred to related languages~\cite{allaEvolutionHindiText2009}.
-
-% The challenge of localization can partially be solved with our implementation. As~\cref{ch:design} will explain in detail, one goal of our implementation is that the \gls{LLM} can be swapped out easily. While this doesn't enable us to leverage language specifics like changing character shapes, it enables us to choose a \gls{LLM} that was trained on any natural language desired. If we are able to generate semantically meaningful cover texts in any language, further localization might not be necessary. We could use our implementation in any geo-political conflict, deliberately speaking (or not speaking) the language of the attacker. But verifying this is unfortunately out of scope for this thesis, as the author doesn't speak any languages with non-Latin scripts.
-
-% \subsection{A negative example}
-% \label{sec:aNegativeExample}
-% Lastly, we take a look at an example of what not to do, so we can avoid it in our implementation. We recall that steganography violates Kerckhoffs' principle~\cite{andersonLimitsSteganography1998}, as the security of a steganographic system partially relies on the attacker not knowing the system - or that it is being used in the first place.
-
-% An approach for text-based steganography in e-mails is shown in~\cite{malikHighCapacityText2017}. Similar to our implementation, it uses Huffman compression to convert a secret message from string to binary. But instead of generating a cover text with \glspl{LLM}, an edit-based approach is chosen by taking the cover text from user input. Information is encoded by colour coding the cover text, with colours being selected from a user-defined colour table. \cref{fig:colourCoding} shows the example given in~\cite{malikHighCapacityText2017}. As~\cite{malikHighCapacityText2017} proposes, this approach is suitable for personal messages containing congratulations, poems, etc. Users may try to obfuscate the steganography as they have full control over cover text quality and the colour table, e.g. by choosing black, dark grey, light grey and white as colours.
-
-% \begin{figure}
-%     \begin{wide}
-%         \centering
-%         \captionsetup{width=\linewidth}
-%         \includegraphics[width=0.75\linewidth]{colour_coding.png}
-%         \caption[Colour coding]{Steganography via colour coding~\cite{malikHighCapacityText2017}.}
-%         \label{fig:colourCoding}
-%     \end{wide}
-% \end{figure}
-
-% However, this doesn't outweigh the disadvantages. The colour table has to be exchanged between sender and receiver, which is difficult as it is not natural language. This approach also is not robust when using non-digital communication channels, as the colour coding is lost if the cover text is spoken during a phone call or printed out in black and white. The proposed use case is very narrow, as an attacker should become suspicious if this is used in any other setting. More generally, the colour coding introduces an unnatural communication pattern that might make it obvious to an attacker that a secret communication is happening. This breaks the additional layer of security that is supposed to be introduced by steganography. We can transfer this to our implementation by avoiding e.g. uncommon use of abbreviations or emojis in the generated chat conversations. Furthermore, we should also avoid introducing unnatural restrictions, e.g. assuming that chat messages are being sent with strictly alternating roles of sender and receiver. \cref{ch:implementation} will show that this is only partially possible in our implementation.
