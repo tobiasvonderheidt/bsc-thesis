@@ -11,10 +11,10 @@ To implement steganography with local \glspl{LLM} on Android, we have to make so
 \label{sec:overviewOfRequirementsAndArchitecture}
 Our work is based on the Stegasuras project~\cite{zieglerNeuralLinguisticSteganography2019}, which demonstrates how to perform steganography by manipulating token generation of a \gls{LLM}. Fundamentally, it works as follows: First, we convert a secret message from string to binary. Then, we encode it into a cover text by letting the \gls{LLM} sample tokens to complete a given context based on the secret message bits. Stegasuras has a modular architecture, as it implements multiple algorithms for each of the two steps. This approach is promising for fulfilling the requirements we set ourselves in \cref{ch:introduction}:
 \begin{enumerate}
-    \item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
-    \item Run the \gls{LLM} locally on an Android smartphone, i.e. don't require any internet connection for the steganography itself.
-    \item Achieve acceptable performance on entry-level devices.
-    \item Make the \gls{LLM} swappable.
+	\item Create a chat conversation between cover texts by generating them with a \gls{LLM}.
+	\item Run the \gls{LLM} locally on an Android smartphone, i.e. don't require any internet connection for the steganography itself.
+	\item Achieve acceptable performance on entry-level devices.
+	\item Make the \gls{LLM} swappable.
 \end{enumerate}
 
 But as Stegasuras uses GPT-2 as \gls{LLM}, it is not state-of-the-art anymore. Furthermore, it uses the PyTorch framework to run the \gls{LLM}. As a Python library, PyTorch can't natively be run on Android. Therefore, we investigate modern \glspl{LLM} and the frameworks to run them in \cref{sec:howToRunLLMsOnAndroid,sec:howToSelectASuitableLLM}. This results in the following architecture:
