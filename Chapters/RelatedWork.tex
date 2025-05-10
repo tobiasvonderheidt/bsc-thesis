@@ -13,14 +13,14 @@ As we implement an Android app to perform steganography in chat messages locally
 
 \subsection{Mimicking}
 \label{sec:mimicking}
-Spammimic is a demonstration of text-based steganography without \glspl{LLM} from as early as 2001~\cite{spammimicSpammimic2000}. Secret messages are encoded into cover texts that look like spam e-mails. \cref{fig:spammimicSpamEmail} shows an example. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
+Spammimic is a demonstration of text-based steganography without \glspl{LLM} from as early as 2001~\cite{spammimicSpammimic2000}. Secret messages are encoded into cover texts that look like spam e-mails. \cref{fig:spammimic} shows an example. This is done using context-free grammars and mimic functions~\cite{waynerMimicFunctions1992,bennettLinguisticSteganographySurvey2004}.
 
 \begin{figure}
 	\centering
 	\captionsetup{width=\linewidth}
-	\includegraphics[width=0.5\linewidth]{spammimic_spam_email.png}
+	\includegraphics[width=0.5\linewidth]{spammimic.png}
 	\caption[Spammimic]{Steganography in spam e-mails with Spammimic~\cite{spammimicSpammimic2000}. Only the secret message "hello world" was user input.}
-	\label{fig:spammimicSpamEmail}
+	\label{fig:spammimic}
 \end{figure}
 
 This approach already fulfills some of the requirements we set ourselves in \cref{ch:introduction}. It generates plausible cover texts for a given topic with minimal computing resources. The topic can be chosen by exchanging the grammar~\cite{spammimicSpammimic2000}. Generating spam e-mails is particularly beneficial as it lowers an attacker's expectation of cover text quality. It allows us to hide our communication amongst other e-mail traffic, obfuscating when a secret communication is happening. We may even send our cover texts to any number of recipients that includes the intended one, to obfuscate who is communicating with whom. Both would increase an attacker's costs significantly~\cite{bennettLinguisticSteganographySurvey2004,petitcolasInformationHidingSurvey1999}.
